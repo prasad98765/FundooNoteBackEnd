@@ -4,7 +4,8 @@ import com.bridgelabz.fundoonotesapi.fundoonotesapi.dto.UserDTO;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import org.springframework.stereotype.Component;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -45,7 +46,7 @@ public class UserDetails implements Serializable {
         this.lastName = userDTO.lastName;
         this.email = userDTO.email;
         this.createdDate = new Date();
-        this.password = userDTO.password;
+        this.password = new BCryptPasswordEncoder().encode(userDTO.password);
         this.service = userDTO.service;
         this.isVerified = false;
     }
