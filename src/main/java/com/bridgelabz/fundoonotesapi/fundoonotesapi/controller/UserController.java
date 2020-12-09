@@ -3,6 +3,8 @@ package com.bridgelabz.fundoonotesapi.fundoonotesapi.controller;
 import com.bridgelabz.fundoonotesapi.fundoonotesapi.dto.Response;
 import com.bridgelabz.fundoonotesapi.fundoonotesapi.dto.UserDTO;
 import com.bridgelabz.fundoonotesapi.fundoonotesapi.exception.FundooException;
+import com.bridgelabz.fundoonotesapi.fundoonotesapi.module.UserDetails;
+import com.bridgelabz.fundoonotesapi.fundoonotesapi.repository.UserRepository;
 import com.bridgelabz.fundoonotesapi.fundoonotesapi.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,14 +20,24 @@ public class UserController {
     @Autowired
     UserService userService;
 
+    @Autowired
+    private UserRepository userRepository;
+
+
     @PostMapping("/signUp")
     public Response signUp(@Valid @RequestBody UserDTO userDTO, BindingResult result){
         if(result.hasErrors()){
             throw new FundooException(FundooException.ExceptionType.INVALID_DATA,"INVALID DATA");
         }
-        String message = userService.addUser(userDTO);
-        Response response = new Response(message, HttpStatus.OK);
-        return response;
+        UserDetails userDetails = userRepository.findByEmail(userDTO.email);
+        if(userDetails != null){
+            throw new FundooException(FundooException.ExceptionType.USER_ALREADY_REGISTERED,"User Already Registered");
+        }
+            String message = userService.addUser(userDTO);
+            Response response = new Response(message, HttpStatus.OK);
+            return response;
+
+
     }
 
     @GetMapping("/confirm-account")
