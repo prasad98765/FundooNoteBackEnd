@@ -6,6 +6,7 @@ import com.bridgelabz.fundoonotesapi.fundoonotesapi.module.UserDetails;
 import com.bridgelabz.fundoonotesapi.fundoonotesapi.repository.UserRepository;
 import com.bridgelabz.fundoonotesapi.fundoonotesapi.util.JwtToken;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -19,6 +20,7 @@ public class UserService {
 
     @Autowired
     private JwtToken jwtToken;
+
 
     public String addUser(UserDTO userdto){
         try{
@@ -46,4 +48,12 @@ public class UserService {
 
     }
 
+    public UserDetails signIn(String email, String password) {
+        UserDetails userDetails = userRepository.findByEmail(email);
+        if(new BCryptPasswordEncoder().matches(password,userDetails.password)){
+            return userDetails;
+        }else{
+            throw new FundooException(FundooException.ExceptionType.INVALID_PASSWORD,"INVALID PASSWORD");
+        }
+    }
 }

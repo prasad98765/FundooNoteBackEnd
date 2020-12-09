@@ -7,7 +7,8 @@ public class FundooException extends RuntimeException {
     public enum ExceptionType{
         INVALID_DATA,
         INVALID_LINK,
-        USER_ALREADY_REGISTERED;
+        USER_ALREADY_REGISTERED,
+        INVALID_PASSWORD;
     }
 
     public FundooException(ExceptionType type,String message){

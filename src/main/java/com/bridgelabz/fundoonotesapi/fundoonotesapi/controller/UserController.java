@@ -34,7 +34,7 @@ public class UserController {
             throw new FundooException(FundooException.ExceptionType.USER_ALREADY_REGISTERED,"User Already Registered");
         }
             String message = userService.addUser(userDTO);
-            Response response = new Response(message, HttpStatus.OK);
+            Response response = new Response(message, HttpStatus.OK.value());
             return response;
 
 
@@ -43,7 +43,14 @@ public class UserController {
     @GetMapping("/confirm-account")
     public Response confirEmailAccont(@RequestParam("token") String token){
         String message = userService.confirmEmailAccount(token);
-        Response response = new Response(message, HttpStatus.OK);
+        Response response = new Response(message, HttpStatus.OK.value());
+        return response;
+    }
+
+    @PostMapping("/login")
+    public Response signIn(@RequestBody UserDTO userDTO){
+        UserDetails userDetails  = userService.signIn(userDTO.email,userDTO.password);
+        Response response = new Response(userDetails, "Login Successfully",HttpStatus.OK.value());
         return response;
     }
 }
