@@ -31,6 +31,11 @@ public class UserDetails implements Serializable {
     public Date createdDate;
     public boolean isVerified;
 
+
+    public void setVerified(boolean verified) {
+        isVerified = verified;
+    }
+
     public UserDetails() {
 
     }
@@ -44,7 +49,4 @@ public class UserDetails implements Serializable {
         this.service = userDTO.service;
         this.isVerified = false;
     }
-
-
-
 }

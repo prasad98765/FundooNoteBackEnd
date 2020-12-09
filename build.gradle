@@ -31,6 +31,8 @@ dependencies {
     compile group: 'javax.validation', name: 'validation-api', version: '2.0.0.CR2'
     // https://mvnrepository.com/artifact/org.hibernate.validator/hibernate-validator
     compile group: 'org.hibernate.validator', name: 'hibernate-validator', version: '6.1.2.Final'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-mail', version: '2.2.5.RELEASE'
+
 
 
 }
