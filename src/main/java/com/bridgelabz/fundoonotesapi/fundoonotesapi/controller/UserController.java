@@ -1,5 +1,5 @@
 package com.bridgelabz.fundoonotesapi.fundoonotesapi.controller;
-
+import java.net.URI;
 import com.bridgelabz.fundoonotesapi.fundoonotesapi.dto.Response;
 import com.bridgelabz.fundoonotesapi.fundoonotesapi.dto.UserDTO;
 import com.bridgelabz.fundoonotesapi.fundoonotesapi.exception.FundooException;
@@ -8,7 +8,9 @@ import com.bridgelabz.fundoonotesapi.fundoonotesapi.repository.UserRepository;
 import com.bridgelabz.fundoonotesapi.fundoonotesapi.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -58,6 +60,18 @@ public class UserController {
         Response response = new Response(message, HttpStatus.OK.value());
         return response;
     }
+
+    @GetMapping("reset-password")
+    public ResponseEntity<Object> resetPassword(@RequestParam("token") String token ){
+        String message = userService.resetPassword(token);
+        String redirectURL = "http://localhost:3000/confirmpassword?token=" + token;
+        HttpHeaders headers = new HttpHeaders();
+        headers.setLocation(URI.create(redirectURL));
+        return ResponseEntity.status(HttpStatus.FOUND)
+                .headers(headers).build();
+    }
+
+
 
 
 }

@@ -67,4 +67,15 @@ public class UserService {
         sendEmail.forgotPasswordEmail(email,Token);
         return "Reset Password Link Sent to your Email Id";
     }
+
+    public String resetPassword(String token) {
+        String id = jwtToken.getDataFromToken(token);
+        UserDetails users = userRepository.findByEmail(id);
+        if(jwtToken.validateToken(token,users.email)) {
+            return "Valid Token";
+        }else{
+            throw new FundooException(FundooException.ExceptionType.INVALID_LINK,"Invalid Link");
+        }
+
+    }
 }
