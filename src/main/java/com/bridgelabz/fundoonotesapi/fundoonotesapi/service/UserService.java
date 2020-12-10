@@ -63,19 +63,32 @@ public class UserService {
         if(userDetails == null){
             throw new FundooException(FundooException.ExceptionType.INVALID_EMAIL,"Invalid Email");
         }
-        String Token = jwtToken.generateToken(email);
+        String Token = jwtToken.generateToken(userDetails.id);
         sendEmail.forgotPasswordEmail(email,Token);
         return "Reset Password Link Sent to your Email Id";
     }
 
     public String resetPassword(String token) {
         String id = jwtToken.getDataFromToken(token);
-        UserDetails users = userRepository.findByEmail(id);
-        if(jwtToken.validateToken(token,users.email)) {
+        UserDetails users = userRepository.findById(id);
+        System.out.println(users);
+        if(jwtToken.validateToken(token,users.id)) {
             return "Valid Token";
         }else{
             throw new FundooException(FundooException.ExceptionType.INVALID_LINK,"Invalid Link");
         }
 
+    }
+
+    public String changePassword(UserDTO userDTO, String token) {
+        String id = jwtToken.getDataFromToken(token);
+        UserDetails users = userRepository.findById(id);
+        if(users == null){
+            throw new FundooException(FundooException.ExceptionType.INVALID_USER,"Invalid User");
+        }
+        String password = new BCryptPasswordEncoder().encode(userDTO.password);
+        users.setPassword(password);
+        userRepository.save(users);
+        return "Password Change Successfully";
     }
 }

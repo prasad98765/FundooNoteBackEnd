@@ -41,6 +41,10 @@ public class UserDetails implements Serializable {
 
     }
 
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     public UserDetails(UserDTO userDTO){
         this.firstName = userDTO.firstName;
         this.lastName = userDTO.lastName;

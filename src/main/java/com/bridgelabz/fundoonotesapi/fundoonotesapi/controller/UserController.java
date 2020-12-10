@@ -71,6 +71,16 @@ public class UserController {
                 .headers(headers).build();
     }
 
+    @PostMapping("change-password")
+    public Response changePassword(@RequestBody UserDTO userDTO, @RequestParam("token") String token ){
+        String message = userService.changePassword(userDTO,token);
+        Response response = new Response(message, HttpStatus.OK.value());
+        return response;
+    }
+
+
+
+
 
 
 

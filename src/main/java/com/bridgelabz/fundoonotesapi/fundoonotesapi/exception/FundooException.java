@@ -9,7 +9,8 @@ public class FundooException extends RuntimeException {
         INVALID_LINK,
         USER_ALREADY_REGISTERED,
         INVALID_PASSWORD,
-        INVALID_EMAIL;
+        INVALID_EMAIL,
+        INVALID_USER;
     }
 
     public FundooException(ExceptionType type,String message){
