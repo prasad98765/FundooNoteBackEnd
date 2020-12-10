@@ -19,5 +19,13 @@ public class SendEmail {
         javaMailSender.send(mailMessage);
     }
 
+    public void forgotPasswordEmail(String email,String token){
+        SimpleMailMessage mailMessage = new SimpleMailMessage();
+        mailMessage.setTo(email);
+        mailMessage.setSubject("Reset Password Link");
+        mailMessage.setText("http://localhost:5000/reset-password?token=" + token);
+        javaMailSender.send(mailMessage);
+    }
+
 
 }

@@ -56,4 +56,15 @@ public class UserService {
             throw new FundooException(FundooException.ExceptionType.INVALID_PASSWORD,"INVALID PASSWORD");
         }
     }
+
+
+    public String forgotPassword(String email) {
+        UserDetails userDetails = userRepository.findByEmail(email);
+        if(userDetails == null){
+            throw new FundooException(FundooException.ExceptionType.INVALID_EMAIL,"Invalid Email");
+        }
+        String Token = jwtToken.generateToken(email);
+        sendEmail.forgotPasswordEmail(email,Token);
+        return "Reset Password Link Sent to your Email Id";
+    }
 }

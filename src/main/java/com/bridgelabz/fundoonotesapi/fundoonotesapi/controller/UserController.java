@@ -36,8 +36,6 @@ public class UserController {
             String message = userService.addUser(userDTO);
             Response response = new Response(message, HttpStatus.OK.value());
             return response;
-
-
     }
 
     @GetMapping("/confirm-account")
@@ -53,4 +51,13 @@ public class UserController {
         Response response = new Response(userDetails, "Login Successfully",HttpStatus.OK.value());
         return response;
     }
+
+    @GetMapping("/forgot-password")
+    public Response forgotPassword(@RequestParam("email") String email){
+        String message = userService.forgotPassword(email);
+        Response response = new Response(message, HttpStatus.OK.value());
+        return response;
+    }
+
+
 }
