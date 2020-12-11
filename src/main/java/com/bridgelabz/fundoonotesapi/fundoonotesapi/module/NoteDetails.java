@@ -50,6 +50,10 @@ public class NoteDetails implements Serializable {
         isPined = pined;
     }
 
+    public void setArchived(Boolean archived) {
+        isArchived = archived;
+    }
+
     public NoteDetails(NoteDTO noteDTO, UserDetails userDetails){
         this.createdDate = new Date();
         this.title = noteDTO.title;

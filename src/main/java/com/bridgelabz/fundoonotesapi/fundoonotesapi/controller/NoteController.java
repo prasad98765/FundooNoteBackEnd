@@ -57,4 +57,11 @@ public class NoteController {
         return response;
     }
 
+    @PostMapping("/ArchivedUnArchivedNote")
+    public Response updateArchived(@RequestParam("token") String token , @RequestBody NoteDTO noteDTO ){
+        String message = noteService.updateArchived(noteDTO);
+        Response response = new Response(message,HttpStatus.OK.value());
+        return response;
+    }
+
 }

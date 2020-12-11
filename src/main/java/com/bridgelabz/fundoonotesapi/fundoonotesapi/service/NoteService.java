@@ -73,5 +73,15 @@ public class NoteService {
         List<NoteDetails> noteList = noteRepository.findByUserDetailsIdAndIsPinedTrue(users.id);
         return noteList;
     }
+
+    public String updateArchived(NoteDTO noteDTO) {
+        NoteDetails details = noteRepository.findByNote_Id(noteDTO.noteId);
+        if(details == null){
+            throw new FundooException(FundooException.ExceptionType.INVALID_NOTE,"Invalid Note");
+        }
+        details.setArchived(noteDTO.isArchived);
+        noteRepository.save(details);
+        return "Archived Note Updated";
+    }
 }
 
