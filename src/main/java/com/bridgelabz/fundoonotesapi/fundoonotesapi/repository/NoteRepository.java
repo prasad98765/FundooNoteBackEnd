@@ -3,9 +3,12 @@ package com.bridgelabz.fundoonotesapi.fundoonotesapi.repository;
 import com.bridgelabz.fundoonotesapi.fundoonotesapi.module.NoteDetails;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public interface NoteRepository extends JpaRepository<NoteDetails, Integer>  {
-
+    List<NoteDetails> findByUserDetailsId(int id);
 }

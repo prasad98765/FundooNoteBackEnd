@@ -64,6 +64,7 @@ public class UserService {
             throw new FundooException(FundooException.ExceptionType.INVALID_EMAIL,"Invalid Email");
         }
         String Token = jwtToken.generateToken(userDetails.email);
+        System.out.println(Token);
         sendEmail.forgotPasswordEmail(email,Token);
         return "Reset Password Link Sent to your Email Id";
     }

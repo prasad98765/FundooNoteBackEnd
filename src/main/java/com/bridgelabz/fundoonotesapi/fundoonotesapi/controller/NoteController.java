@@ -8,13 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 public class NoteController {
@@ -28,6 +26,13 @@ public class NoteController {
         }
         noteService.saveNote(noteDTO,token);
         Response response = new Response("Note_Added_Successfully",HttpStatus.OK.value());
+        return response;
+    }
+
+    @GetMapping("/allNoteList")
+    public Response noteList(@RequestParam("token") String token){
+        List noteList = noteService.getNoteList(token);
+        Response response = new Response(noteList,HttpStatus.OK.value());
         return response;
     }
 }
