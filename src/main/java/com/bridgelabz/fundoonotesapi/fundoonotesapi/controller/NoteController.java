@@ -64,4 +64,12 @@ public class NoteController {
         return response;
     }
 
+    @GetMapping("/archivedNoteList")
+    public Response archivedNoteList(@RequestParam("token") String token){
+        List message = noteService.archivedNoteList(token);
+        Response response = new Response(message,HttpStatus.OK.value());
+        return response;
+    }
+
+
 }

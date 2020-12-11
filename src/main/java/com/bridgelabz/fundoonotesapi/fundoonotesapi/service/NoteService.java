@@ -83,5 +83,15 @@ public class NoteService {
         noteRepository.save(details);
         return "Archived Note Updated";
     }
+
+    public List archivedNoteList(String token) {
+        String id = jwtToken.getDataFromToken(token);
+        if(id == null){
+            throw new FundooException(FundooException.ExceptionType.INVALID_TOKEN,"Invalid Token");
+        }
+        UserDetails users = userRepository.findByEmail(id);
+        List<NoteDetails> noteList = noteRepository.findByUserDetailsIdAndIsArchivedTrue(users.id);
+        return noteList;
+    }
 }
 
