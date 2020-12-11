@@ -1,6 +1,7 @@
 package com.bridgelabz.fundoonotesapi.fundoonotesapi.module;
 
 import com.bridgelabz.fundoonotesapi.fundoonotesapi.dto.UserDTO;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -17,17 +18,21 @@ import java.util.Set;
 @Setter
 @ToString
 public class UserDetails implements Serializable {
-
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public String id;
+    @Column(name = "id")
+    public int id;
     public String firstName;
     public String lastName;
+    @JsonIgnore
     public String email;
+    @JsonIgnore
     public String password;
+    @JsonIgnore
     public String service;
+    @JsonIgnore
     public Date createdDate;
+    @JsonIgnore
     public boolean isVerified;
 
 

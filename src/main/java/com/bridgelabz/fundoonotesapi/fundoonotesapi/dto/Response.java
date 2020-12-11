@@ -18,4 +18,8 @@ public class Response {
         this.message = message;
         this.status = status;
     }
+
+    public Response(String message){
+        this.message = message;
+    }
 }

@@ -16,10 +16,15 @@ public class NoteService {
     private NoteRepository noteRepository;
 
     @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
     private JwtToken jwtToken;
 
     public void saveNote(NoteDTO noteDTO, String token) {
-        NoteDetails noteDetails = new NoteDetails(noteDTO);
+        String id = jwtToken.getDataFromToken(token);
+        UserDetails users = userRepository.findByEmail(id);
+        NoteDetails noteDetails = new NoteDetails(noteDTO,users);
         noteRepository.save(noteDetails);
     }
 }

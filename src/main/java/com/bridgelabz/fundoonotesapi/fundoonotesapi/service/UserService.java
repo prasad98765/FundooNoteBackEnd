@@ -26,7 +26,7 @@ public class UserService {
         try{
             UserDetails userDetails = new UserDetails(userdto);
             UserDetails userDetails1 =  userRepository.save(userDetails);
-            String Token = jwtToken.generateToken(userDetails1.id);
+            String Token  = jwtToken.generateToken(userDetails1.email);
             sendEmail.sendEmail(userDetails1.email,Token);
             return "Your Account Created Successfully";
         } catch (Exception e){
@@ -38,7 +38,7 @@ public class UserService {
     public String confirmEmailAccount(String token) {
         try{
             String id = jwtToken.getDataFromToken(token);
-            UserDetails users = userRepository.findById(id);
+            UserDetails users = userRepository.findByEmail(id);
             users.setVerified(true);
             userRepository.save(users);
             return "User Email Account is Verified";
@@ -63,16 +63,15 @@ public class UserService {
         if(userDetails == null){
             throw new FundooException(FundooException.ExceptionType.INVALID_EMAIL,"Invalid Email");
         }
-        String Token = jwtToken.generateToken(userDetails.id);
+        String Token = jwtToken.generateToken(userDetails.email);
         sendEmail.forgotPasswordEmail(email,Token);
         return "Reset Password Link Sent to your Email Id";
     }
 
     public String resetPassword(String token) {
         String id = jwtToken.getDataFromToken(token);
-        UserDetails users = userRepository.findById(id);
-        System.out.println(users);
-        if(jwtToken.validateToken(token,users.id)) {
+        UserDetails userDetails = userRepository.findByEmail(id);
+        if(jwtToken.validateToken(token,userDetails.email)) {
             return "Valid Token";
         }else{
             throw new FundooException(FundooException.ExceptionType.INVALID_LINK,"Invalid Link");

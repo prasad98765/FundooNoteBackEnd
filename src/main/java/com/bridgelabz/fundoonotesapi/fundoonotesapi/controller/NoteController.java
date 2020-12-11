@@ -6,11 +6,13 @@ import com.bridgelabz.fundoonotesapi.fundoonotesapi.exception.FundooException;
 import com.bridgelabz.fundoonotesapi.fundoonotesapi.service.NoteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
 
 import javax.validation.Valid;
 
@@ -25,7 +27,7 @@ public class NoteController {
             throw new FundooException(FundooException.ExceptionType.INVALID_DATA,"INVALID DATA");
         }
         noteService.saveNote(noteDTO,token);
-        Response response = new Response("message", HttpStatus.OK.value());
+        Response response = new Response("Note_Added_Successfully",HttpStatus.OK.value());
         return response;
     }
 }

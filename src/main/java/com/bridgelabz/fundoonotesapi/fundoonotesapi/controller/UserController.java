@@ -49,8 +49,9 @@ public class UserController {
 
     @PostMapping("/login")
     public Response signIn(@RequestBody UserDTO userDTO){
+        System.out.println(userDTO.email);
         UserDetails userDetails  = userService.signIn(userDTO.email,userDTO.password);
-        Response response = new Response(userDetails, "Login Successfully",HttpStatus.OK.value());
+        Response response = new Response(userDetails,"Login Successfully",HttpStatus.OK.value());
         return response;
     }
 
