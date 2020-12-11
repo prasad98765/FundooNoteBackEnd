@@ -28,6 +28,7 @@ public class NoteDetails implements Serializable {
     public String description;
     public String color;
     public Boolean isArchived;
+    public Boolean isDeleted;
     public Date createdDate;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
@@ -43,6 +44,10 @@ public class NoteDetails implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public void setPined(Boolean pined) {
+        isPined = pined;
     }
 
     public NoteDetails(NoteDTO noteDTO, UserDetails userDetails){

@@ -1,6 +1,7 @@
 package com.bridgelabz.fundoonotesapi.fundoonotesapi.service;
 
 import com.bridgelabz.fundoonotesapi.fundoonotesapi.dto.NoteDTO;
+import com.bridgelabz.fundoonotesapi.fundoonotesapi.exception.FundooException;
 import com.bridgelabz.fundoonotesapi.fundoonotesapi.module.NoteDetails;
 import com.bridgelabz.fundoonotesapi.fundoonotesapi.module.UserDetails;
 import com.bridgelabz.fundoonotesapi.fundoonotesapi.repository.NoteRepository;
@@ -33,6 +34,9 @@ public class NoteService {
 
     public List getNoteList(String token) {
         String id = jwtToken.getDataFromToken(token);
+        if(id == null){
+            throw new FundooException(FundooException.ExceptionType.INVALID_TOKEN,"Invalid Token");
+        }
         UserDetails users = userRepository.findByEmail(id);
         List<NoteDetails> noteList = noteRepository.findByUserDetailsId(users.id);
         return noteList;
@@ -41,10 +45,23 @@ public class NoteService {
 
     public String updateNote(NoteDTO noteDTO) {
         NoteDetails details = noteRepository.findByNote_Id(noteDTO.noteId);
-        System.out.println(details);
+        if(details == null){
+            throw new FundooException(FundooException.ExceptionType.INVALID_NOTE,"Invalid Note");
+        }
         details.setTitle(noteDTO.title);
         details.setDescription(noteDTO.description);
         noteRepository.save(details);
         return "Note Updated";
     }
+
+    public String updatePin(NoteDTO noteDTO) {
+        NoteDetails details = noteRepository.findByNote_Id(noteDTO.noteId);
+        if(details == null){
+            throw new FundooException(FundooException.ExceptionType.INVALID_NOTE,"Invalid Note");
+        }
+        details.setPined(noteDTO.isPined);
+        noteRepository.save(details);
+        return "PinNote Updated";
+    }
 }
+

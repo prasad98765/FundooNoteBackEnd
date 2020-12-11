@@ -10,7 +10,9 @@ public class FundooException extends RuntimeException {
         USER_ALREADY_REGISTERED,
         INVALID_PASSWORD,
         INVALID_EMAIL,
-        INVALID_USER;
+        INVALID_USER,
+        INVALID_NOTE,
+        INVALID_TOKEN;
     }
 
     public FundooException(ExceptionType type,String message){

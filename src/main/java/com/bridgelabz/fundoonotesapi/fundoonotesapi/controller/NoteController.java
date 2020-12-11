@@ -43,4 +43,11 @@ public class NoteController {
         return response;
     }
 
+    @PostMapping("/pinUnpinNote")
+    public Response updatePin(@RequestParam("token") String token , @RequestBody NoteDTO noteDTO ){
+        String message = noteService.updatePin(noteDTO);
+        Response response = new Response(message,HttpStatus.OK.value());
+        return response;
+    }
+
 }

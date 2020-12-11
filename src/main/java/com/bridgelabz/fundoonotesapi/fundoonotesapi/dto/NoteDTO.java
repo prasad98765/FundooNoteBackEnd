@@ -22,4 +22,6 @@ public class NoteDTO {
 
     public String color;
 
+    public Boolean isDeleted;
+
 }
