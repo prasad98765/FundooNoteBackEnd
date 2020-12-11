@@ -63,5 +63,15 @@ public class NoteService {
         noteRepository.save(details);
         return "PinNote Updated";
     }
+
+    public List pinNoteList(String token) {
+        String id = jwtToken.getDataFromToken(token);
+        if(id == null){
+            throw new FundooException(FundooException.ExceptionType.INVALID_TOKEN,"Invalid Token");
+        }
+        UserDetails users = userRepository.findByEmail(id);
+        List<NoteDetails> noteList = noteRepository.findByUserDetailsIdAndIsPinedTrue(users.id);
+        return noteList;
+    }
 }
 

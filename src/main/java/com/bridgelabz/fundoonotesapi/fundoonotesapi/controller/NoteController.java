@@ -50,4 +50,11 @@ public class NoteController {
         return response;
     }
 
+    @GetMapping("/pinNoteList")
+    public Response pinNoteList(@RequestParam("token") String token){
+        List message = noteService.pinNoteList(token);
+        Response response = new Response(message,HttpStatus.OK.value());
+        return response;
+    }
+
 }

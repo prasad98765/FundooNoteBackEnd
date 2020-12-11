@@ -24,7 +24,6 @@ public class UserDetails implements Serializable {
     public int id;
     public String firstName;
     public String lastName;
-    @JsonIgnore
     public String email;
     @JsonIgnore
     public String password;
