@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class NoteService {
@@ -35,5 +36,15 @@ public class NoteService {
         UserDetails users = userRepository.findByEmail(id);
         List<NoteDetails> noteList = noteRepository.findByUserDetailsId(users.id);
         return noteList;
+    }
+
+
+    public String updateNote(NoteDTO noteDTO) {
+        NoteDetails details = noteRepository.findByNote_Id(noteDTO.noteId);
+        System.out.println(details);
+        details.setTitle(noteDTO.title);
+        details.setDescription(noteDTO.description);
+        noteRepository.save(details);
+        return "Note Updated";
     }
 }

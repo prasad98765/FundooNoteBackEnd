@@ -37,7 +37,15 @@ public class NoteDetails implements Serializable {
     public NoteDetails() {
     }
 
-    public NoteDetails(NoteDTO noteDTO,UserDetails userDetails){
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public NoteDetails(NoteDTO noteDTO, UserDetails userDetails){
         this.createdDate = new Date();
         this.title = noteDTO.title;
         this.description = noteDTO.description;

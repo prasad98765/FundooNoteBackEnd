@@ -35,4 +35,12 @@ public class NoteController {
         Response response = new Response(noteList,HttpStatus.OK.value());
         return response;
     }
+
+    @PostMapping("/updateNote")
+    public Response updateNote(@RequestParam("token") String token , @RequestBody NoteDTO noteDTO ){
+        String message = noteService.updateNote(noteDTO);
+        Response response = new Response(message,HttpStatus.OK.value());
+        return response;
+    }
+
 }
