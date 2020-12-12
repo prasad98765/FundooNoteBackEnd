@@ -15,5 +15,6 @@ public interface NoteRepository extends JpaRepository<NoteDetails, Integer>  {
     NoteDetails findByNote_Id(String id);
     List<NoteDetails> findByUserDetailsIdAndIsPinedTrue(int id);
     List<NoteDetails> findByUserDetailsIdAndIsArchivedTrue(int id);
+    List<NoteDetails> findByUserDetailsIdAndIsDeletedTrue(int id);
 
 }

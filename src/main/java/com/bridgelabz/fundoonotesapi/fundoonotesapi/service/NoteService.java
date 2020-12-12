@@ -115,5 +115,15 @@ public class NoteService {
         return "Deleted Note Updated";
 
     }
+
+    public List trashNoteList(String token) {
+        String id = jwtToken.getDataFromToken(token);
+        if(id == null){
+            throw new FundooException(FundooException.ExceptionType.INVALID_TOKEN,"Invalid Token");
+        }
+        UserDetails users = userRepository.findByEmail(id);
+        List<NoteDetails> noteList = noteRepository.findByUserDetailsIdAndIsDeletedTrue(users.id);
+        return noteList;
+    }
 }
 

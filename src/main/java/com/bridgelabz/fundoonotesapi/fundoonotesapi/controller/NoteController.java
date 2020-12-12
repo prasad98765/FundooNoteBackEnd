@@ -85,6 +85,13 @@ public class NoteController {
         return response;
     }
 
+    @GetMapping("/trashNoteList")
+    public Response trashNoteList(@RequestParam("token") String token){
+        List message = noteService.trashNoteList(token);
+        Response response = new Response(message,HttpStatus.OK.value());
+        return response;
+    }
+
 
 
 
