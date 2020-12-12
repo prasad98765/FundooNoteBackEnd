@@ -113,7 +113,6 @@ public class NoteService {
         details.setDeleted(noteDTO.isDeleted);
         noteRepository.save(details);
         return "Deleted Note Updated";
-
     }
 
     public List trashNoteList(String token) {
@@ -125,5 +124,16 @@ public class NoteService {
         List<NoteDetails> noteList = noteRepository.findByUserDetailsIdAndIsDeletedTrue(users.id);
         return noteList;
     }
+
+    public String deleteForeverNote(NoteDTO noteDTO) {
+        NoteDetails details = noteRepository.findByNote_Id(noteDTO.noteId);
+        if(details == null){
+            throw new FundooException(FundooException.ExceptionType.INVALID_NOTE,"Invalid Note");
+        }
+        System.out.println(details);
+        noteRepository.deleteByTitleAndIsDeletedTrue(details.title);
+        return "Note Deleted";
+    }
+
 }
 

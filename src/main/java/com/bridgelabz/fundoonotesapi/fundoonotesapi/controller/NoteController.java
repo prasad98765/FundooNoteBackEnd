@@ -6,10 +6,8 @@ import com.bridgelabz.fundoonotesapi.fundoonotesapi.exception.FundooException;
 import com.bridgelabz.fundoonotesapi.fundoonotesapi.service.NoteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.http.ResponseEntity;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -92,9 +90,12 @@ public class NoteController {
         return response;
     }
 
-
-
-
+    @PostMapping("/deleteForeverNote")
+    public Response deleteForeverNote(@RequestParam("token") String token, @RequestBody NoteDTO noteDTO){
+        String message = noteService.deleteForeverNote(noteDTO);
+        Response response = new Response(message,HttpStatus.OK.value());
+        return response;
+    }
 
 
 }
