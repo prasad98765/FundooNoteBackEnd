@@ -58,6 +58,10 @@ public class NoteDetails implements Serializable {
         this.color = color;
     }
 
+    public void setDeleted(Boolean deleted) {
+        isDeleted = deleted;
+    }
+
     public NoteDetails(NoteDTO noteDTO, UserDetails userDetails){
         this.createdDate = new Date();
         this.title = noteDTO.title;

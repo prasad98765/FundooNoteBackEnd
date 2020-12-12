@@ -103,5 +103,17 @@ public class NoteService {
         noteRepository.save(details);
         return "Note Color Updated";
     }
+
+
+    public String updateTrashNote(NoteDTO noteDTO) {
+        NoteDetails details = noteRepository.findByNote_Id(noteDTO.noteId);
+        if(details == null){
+            throw new FundooException(FundooException.ExceptionType.INVALID_NOTE,"Invalid Note");
+        }
+        details.setDeleted(noteDTO.isDeleted);
+        noteRepository.save(details);
+        return "Deleted Note Updated";
+
+    }
 }
 

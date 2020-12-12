@@ -78,5 +78,16 @@ public class NoteController {
         return response;
     }
 
+    @PostMapping("/trashNote")
+    public Response updateTrashNote(@RequestParam("token") String token, @RequestBody NoteDTO noteDTO){
+        String message = noteService.updateTrashNote(noteDTO);
+        Response response = new Response(message,HttpStatus.OK.value());
+        return response;
+    }
+
+
+
+
+
 
 }
