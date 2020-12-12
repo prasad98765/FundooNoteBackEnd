@@ -71,5 +71,12 @@ public class NoteController {
         return response;
     }
 
+    @PostMapping("/colorNote")
+    public Response updateColor(@RequestParam("token") String token , @RequestBody NoteDTO noteDTO ){
+        String message = noteService.updateColor(noteDTO);
+        Response response = new Response(message,HttpStatus.OK.value());
+        return response;
+    }
+
 
 }

@@ -54,6 +54,10 @@ public class NoteDetails implements Serializable {
         isArchived = archived;
     }
 
+    public void setColor(String color) {
+        this.color = color;
+    }
+
     public NoteDetails(NoteDTO noteDTO, UserDetails userDetails){
         this.createdDate = new Date();
         this.title = noteDTO.title;

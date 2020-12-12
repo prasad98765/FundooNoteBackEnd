@@ -93,5 +93,15 @@ public class NoteService {
         List<NoteDetails> noteList = noteRepository.findByUserDetailsIdAndIsArchivedTrue(users.id);
         return noteList;
     }
+
+    public String updateColor(NoteDTO noteDTO){
+        NoteDetails details = noteRepository.findByNote_Id(noteDTO.noteId);
+        if(details == null){
+            throw new FundooException(FundooException.ExceptionType.INVALID_NOTE,"Invalid Note");
+        }
+        details.setColor(noteDTO.color);
+        noteRepository.save(details);
+        return "Note Color Updated";
+    }
 }
 
