@@ -65,6 +65,7 @@ public class NoteDetails implements Serializable {
         this.isPined = noteDTO.isPined;
         this.isArchived = noteDTO.isArchived;
         this.color = noteDTO.color;
+        this.isDeleted = noteDTO.isDeleted;
         this.userDetails = userDetails;
     }
 

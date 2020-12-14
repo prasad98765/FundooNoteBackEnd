@@ -18,7 +18,7 @@ public class NoteController {
     private NoteService noteService;
 
     @PostMapping("/saveNote")
-    public Response saveNOte(@Valid @RequestBody NoteDTO noteDTO, @RequestParam("token") String token, BindingResult result){
+    public Response saveNote(@Valid @RequestBody NoteDTO noteDTO, @RequestParam("token") String token, BindingResult result){
         if(result.hasErrors()){
             throw new FundooException(FundooException.ExceptionType.INVALID_DATA,"INVALID DATA");
         }

@@ -1,7 +1,6 @@
 package com.bridgelabz.fundoonotesapi.fundoonotesapi.dto;
 
 import com.bridgelabz.fundoonotesapi.fundoonotesapi.module.UserDetails;
-import org.springframework.http.HttpStatus;
 
 import java.util.List;
 
