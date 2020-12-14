@@ -13,6 +13,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
+@RequestMapping("/notes")
 public class NoteController {
     @Autowired
     private NoteService noteService;
