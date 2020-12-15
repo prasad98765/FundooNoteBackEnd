@@ -36,14 +36,14 @@ public class NoteController {
     }
 
     @PostMapping("/updateNote")
-    public Response updateNote(@RequestParam("token") String token , @RequestBody NoteDTO noteDTO ){
+    public Response updateNote(@RequestHeader("token") String token , @RequestBody NoteDTO noteDTO ){
         String message = noteService.updateNote(noteDTO);
         Response response = new Response(message,HttpStatus.OK.value());
         return response;
     }
 
     @PostMapping("/pinUnpinNote")
-    public Response updatePin(@RequestParam("token") String token , @RequestBody NoteDTO noteDTO ){
+    public Response updatePin(@RequestHeader("token") String token , @RequestBody NoteDTO noteDTO ){
         String message = noteService.updatePin(noteDTO);
         Response response = new Response(message,HttpStatus.OK.value());
         return response;
@@ -57,7 +57,7 @@ public class NoteController {
     }
 
     @PostMapping("/ArchivedUnArchivedNote")
-    public Response updateArchived(@RequestParam("token") String token , @RequestBody NoteDTO noteDTO ){
+    public Response updateArchived(@RequestHeader("token") String token , @RequestBody NoteDTO noteDTO ){
         String message = noteService.updateArchived(noteDTO);
         Response response = new Response(message,HttpStatus.OK.value());
         return response;
@@ -71,14 +71,14 @@ public class NoteController {
     }
 
     @PostMapping("/colorNote")
-    public Response updateColor(@RequestParam("token") String token , @RequestBody NoteDTO noteDTO ){
+    public Response updateColor(@RequestHeader("token") String token , @RequestBody NoteDTO noteDTO ){
         String message = noteService.updateColor(noteDTO);
         Response response = new Response(message,HttpStatus.OK.value());
         return response;
     }
 
     @PostMapping("/trashNote")
-    public Response updateTrashNote(@RequestParam("token") String token, @RequestBody NoteDTO noteDTO){
+    public Response updateTrashNote(@RequestHeader("token") String token, @RequestBody NoteDTO noteDTO){
         String message = noteService.updateTrashNote(noteDTO);
         Response response = new Response(message,HttpStatus.OK.value());
         return response;
@@ -92,11 +92,10 @@ public class NoteController {
     }
 
     @PostMapping("/deleteForeverNote")
-    public Response deleteForeverNote(@RequestParam("token") String token, @RequestBody NoteDTO noteDTO){
+    public Response deleteForeverNote(@RequestHeader("token") String token, @RequestBody NoteDTO noteDTO){
         String message = noteService.deleteForeverNote(noteDTO);
         Response response = new Response(message,HttpStatus.OK.value());
         return response;
     }
-
 
 }

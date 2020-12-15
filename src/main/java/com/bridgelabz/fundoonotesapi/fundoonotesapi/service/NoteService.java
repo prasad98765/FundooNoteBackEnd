@@ -11,10 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
-public class NoteService {
+public class NoteService implements NoteServiceInterface {
 
     @Autowired
     private NoteRepository noteRepository;
@@ -25,6 +24,7 @@ public class NoteService {
     @Autowired
     private JwtToken jwtToken;
 
+    @Override
     public void saveNote(NoteDTO noteDTO, String token) {
         String id = jwtToken.getDataFromToken(token);
         UserDetails users = userRepository.findByEmail(id);
@@ -32,6 +32,7 @@ public class NoteService {
         noteRepository.save(noteDetails);
     }
 
+    @Override
     public List getNoteList(String token) {
         String id = jwtToken.getDataFromToken(token);
         if(id == null){
@@ -41,8 +42,7 @@ public class NoteService {
         List<NoteDetails> noteList = noteRepository.findByUserDetailsId(users.id);
         return noteList;
     }
-
-
+    @Override
     public String updateNote(NoteDTO noteDTO) {
         NoteDetails details = noteRepository.findByNote_Id(noteDTO.noteId);
         if(details == null){
@@ -54,6 +54,7 @@ public class NoteService {
         return "Note Updated";
     }
 
+    @Override
     public String updatePin(NoteDTO noteDTO) {
         NoteDetails details = noteRepository.findByNote_Id(noteDTO.noteId);
         if(details == null){
@@ -64,6 +65,7 @@ public class NoteService {
         return "PinNote Updated";
     }
 
+    @Override
     public List pinNoteList(String token) {
         String id = jwtToken.getDataFromToken(token);
         if(id == null){
@@ -74,6 +76,7 @@ public class NoteService {
         return noteList;
     }
 
+    @Override
     public String updateArchived(NoteDTO noteDTO) {
         NoteDetails details = noteRepository.findByNote_Id(noteDTO.noteId);
         if(details == null){
@@ -84,6 +87,7 @@ public class NoteService {
         return "Archived Note Updated";
     }
 
+    @Override
     public List archivedNoteList(String token) {
         String id = jwtToken.getDataFromToken(token);
         if(id == null){
@@ -94,6 +98,7 @@ public class NoteService {
         return noteList;
     }
 
+    @Override
     public String updateColor(NoteDTO noteDTO){
         NoteDetails details = noteRepository.findByNote_Id(noteDTO.noteId);
         if(details == null){
@@ -105,6 +110,7 @@ public class NoteService {
     }
 
 
+    @Override
     public String updateTrashNote(NoteDTO noteDTO) {
         NoteDetails details = noteRepository.findByNote_Id(noteDTO.noteId);
         if(details == null){
@@ -115,6 +121,7 @@ public class NoteService {
         return "Deleted Note Updated";
     }
 
+    @Override
     public List trashNoteList(String token) {
         String id = jwtToken.getDataFromToken(token);
         if(id == null){
@@ -125,6 +132,7 @@ public class NoteService {
         return noteList;
     }
 
+    @Override
     public String deleteForeverNote(NoteDTO noteDTO) {
         NoteDetails details = noteRepository.findByNote_Id(noteDTO.noteId);
         if(details == null){

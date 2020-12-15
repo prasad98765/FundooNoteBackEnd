@@ -10,7 +10,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UserService {
+public class UserService implements UserServiceInterface {
 
     @Autowired
     private UserRepository userRepository;
@@ -22,6 +22,7 @@ public class UserService {
     private JwtToken jwtToken;
 
 
+    @Override
     public String addUser(UserDTO userdto){
         try{
             UserDetails userDetails = new UserDetails(userdto);
@@ -35,6 +36,7 @@ public class UserService {
 
     }
 
+    @Override
     public String confirmEmailAccount(String token) {
         try{
             String id = jwtToken.getDataFromToken(token);
@@ -48,6 +50,7 @@ public class UserService {
 
     }
 
+    @Override
     public UserDetails signIn(String email, String password) {
         UserDetails userDetails = userRepository.findByEmail(email);
         if(new BCryptPasswordEncoder().matches(password,userDetails.password)){
@@ -58,6 +61,7 @@ public class UserService {
     }
 
 
+    @Override
     public String forgotPassword(String email) {
         UserDetails userDetails = userRepository.findByEmail(email);
         if(userDetails == null){
@@ -69,6 +73,7 @@ public class UserService {
         return "Reset Password Link Sent to your Email Id";
     }
 
+    @Override
     public String resetPassword(String token) {
         String id = jwtToken.getDataFromToken(token);
         UserDetails userDetails = userRepository.findByEmail(id);
@@ -80,6 +85,7 @@ public class UserService {
 
     }
 
+    @Override
     public String changePassword(UserDTO userDTO, String token) {
         String id = jwtToken.getDataFromToken(token);
         UserDetails users = userRepository.findById(id);
