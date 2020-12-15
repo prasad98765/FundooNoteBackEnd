@@ -28,7 +28,7 @@ public class UserController {
 
 
     @PostMapping("/signUp")
-    public Response signUp(@Valid @RequestBody UserDTO userDTO, BindingResult result){
+    public ResponseEntity signUp(@Valid @RequestBody UserDTO userDTO, BindingResult result){
         if(result.hasErrors()){
             throw new FundooException(FundooException.ExceptionType.INVALID_DATA,"INVALID DATA");
         }
@@ -37,30 +37,30 @@ public class UserController {
             throw new FundooException(FundooException.ExceptionType.USER_ALREADY_REGISTERED,"User Already Registered");
         }
             String message = userService.addUser(userDTO);
-            Response response = new Response(message, HttpStatus.OK.value());
-            return response;
+            Response response = new Response(message);
+            return new ResponseEntity(response, HttpStatus.OK);
     }
 
     @GetMapping("/confirm-account")
-    public Response confirEmailAccont(@RequestParam("token") String token){
+    public ResponseEntity confirEmailAccont(@RequestParam("token") String token){
         String message = userService.confirmEmailAccount(token);
-        Response response = new Response(message, HttpStatus.OK.value());
-        return response;
+        Response response = new Response(message);
+        return new ResponseEntity(response, HttpStatus.OK);
     }
 
     @PostMapping("/login")
-    public Response signIn(@RequestBody UserDTO userDTO){
+    public ResponseEntity signIn(@RequestBody UserDTO userDTO){
         System.out.println(userDTO.email);
         UserDetails userDetails  = userService.signIn(userDTO.email,userDTO.password);
-        Response response = new Response(userDetails,"Login Successfully",HttpStatus.OK.value());
-        return response;
+        Response response = new Response(userDetails,"Login Successfully");
+        return new ResponseEntity(response, HttpStatus.OK);
     }
 
     @GetMapping("/forgot-password")
-    public Response forgotPassword(@RequestParam("email") String email){
+    public ResponseEntity forgotPassword(@RequestParam("email") String email){
         String message = userService.forgotPassword(email);
-        Response response = new Response(message, HttpStatus.OK.value());
-        return response;
+        Response response = new Response(message);
+        return new ResponseEntity(response, HttpStatus.OK);
     }
 
     @GetMapping("reset-password")
@@ -74,10 +74,10 @@ public class UserController {
     }
 
     @PostMapping("change-password")
-    public Response changePassword(@RequestBody UserDTO userDTO, @RequestParam("token") String token ){
+    public ResponseEntity changePassword(@RequestBody UserDTO userDTO, @RequestParam("token") String token ){
         String message = userService.changePassword(userDTO,token);
-        Response response = new Response(message, HttpStatus.OK.value());
-        return response;
+        Response response = new Response(message);
+        return new ResponseEntity(response, HttpStatus.OK);
     }
 
 }
