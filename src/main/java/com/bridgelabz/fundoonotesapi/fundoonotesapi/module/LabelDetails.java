@@ -34,6 +34,11 @@ public class LabelDetails implements Serializable {
     @JoinColumn(name = "userDetails_id",nullable = false)
     private UserDetails userDetails;
 
+
+    public void setLabelName(String labelName) {
+        this.labelName = labelName;
+    }
+
     public LabelDetails() {
     }
 

@@ -10,4 +10,5 @@ import java.util.List;
 @Repository
 public interface LabelRepository extends JpaRepository<LabelDetails, Integer> {
     List<LabelDetails> findByUserDetailsId(int id);
+    LabelDetails findById(Long id);
 }

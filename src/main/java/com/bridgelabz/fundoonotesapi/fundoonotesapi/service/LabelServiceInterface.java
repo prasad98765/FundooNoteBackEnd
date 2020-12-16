@@ -8,4 +8,6 @@ public interface LabelServiceInterface {
     String saveLabel(String token, LabelDTO labelDTO);
 
     List noteLabelList(String token);
+
+    String updatelabel(Long noteId, String labelName);
 }

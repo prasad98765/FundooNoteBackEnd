@@ -48,4 +48,19 @@ public class LabelService implements LabelServiceInterface {
         List<LabelDetails> noteList = labelRepository.findByUserDetailsId(users.id);
         return noteList;
     }
+
+    @Override
+    public String updatelabel(Long noteId, String labelName) {
+        try{
+            LabelDetails details = labelRepository.findById(noteId);
+            if(details == null){
+                throw new FundooException(FundooException.ExceptionType.INVALID_NOTE,"Invalid Note");
+            }
+            details.setLabelName(labelName);
+            labelRepository.save(details);
+            return "Label Updated Successfully";
+        }catch (Exception e){
+            throw new FundooException(FundooException.ExceptionType.INVALID_DATA,"INVALID DATA");
+        }
+    }
 }

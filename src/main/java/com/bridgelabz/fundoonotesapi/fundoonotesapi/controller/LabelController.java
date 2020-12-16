@@ -31,4 +31,12 @@ public class LabelController {
         return new ResponseEntity(response, HttpStatus.OK);
     }
 
+    @PostMapping("/updateNoteLabel/{id}")
+    public ResponseEntity updateLabel(@RequestParam("token") String token,@PathVariable Long id, @RequestBody String labelName ){
+        String message = labelService.updatelabel(id,labelName);
+        Response response = new Response(message);
+        return new ResponseEntity(response, HttpStatus.OK);
+    }
+
+
 }
