@@ -55,12 +55,12 @@ public class NoteService implements NoteServiceInterface {
     }
 
     @Override
-    public String updatePin(NoteDTO noteDTO) {
-        NoteDetails details = noteRepository.findByNote_Id(noteDTO.noteId);
+    public String updatePin(Long noteId, boolean isPined) {
+        NoteDetails details = noteRepository.findByNote_Id(noteId);
         if(details == null){
             throw new FundooException(FundooException.ExceptionType.INVALID_NOTE,"Invalid Note");
         }
-        details.setPined(noteDTO.isPined);
+        details.setPined(isPined);
         noteRepository.save(details);
         return "PinNote Updated";
     }
@@ -77,12 +77,12 @@ public class NoteService implements NoteServiceInterface {
     }
 
     @Override
-    public String updateArchived(NoteDTO noteDTO) {
-        NoteDetails details = noteRepository.findByNote_Id(noteDTO.noteId);
+    public String updateArchived(Long noteId, boolean isArchived) {
+        NoteDetails details = noteRepository.findByNote_Id(noteId);
         if(details == null){
             throw new FundooException(FundooException.ExceptionType.INVALID_NOTE,"Invalid Note");
         }
-        details.setArchived(noteDTO.isArchived);
+        details.setArchived(isArchived);
         noteRepository.save(details);
         return "Archived Note Updated";
     }
@@ -99,24 +99,24 @@ public class NoteService implements NoteServiceInterface {
     }
 
     @Override
-    public String updateColor(NoteDTO noteDTO){
-        NoteDetails details = noteRepository.findByNote_Id(noteDTO.noteId);
+    public String updateColor(Long noteId, String color){
+        NoteDetails details = noteRepository.findByNote_Id(noteId);
         if(details == null){
             throw new FundooException(FundooException.ExceptionType.INVALID_NOTE,"Invalid Note");
         }
-        details.setColor(noteDTO.color);
+        details.setColor(color);
         noteRepository.save(details);
         return "Note Color Updated";
     }
 
 
     @Override
-    public String updateTrashNote(NoteDTO noteDTO) {
-        NoteDetails details = noteRepository.findByNote_Id(noteDTO.noteId);
+    public String updateTrashNote(Long noteId, boolean isDeleted) {
+        NoteDetails details = noteRepository.findByNote_Id(noteId);
         if(details == null){
             throw new FundooException(FundooException.ExceptionType.INVALID_NOTE,"Invalid Note");
         }
-        details.setDeleted(noteDTO.isDeleted);
+        details.setDeleted(isDeleted);
         noteRepository.save(details);
         return "Deleted Note Updated";
     }
@@ -133,8 +133,8 @@ public class NoteService implements NoteServiceInterface {
     }
 
     @Override
-    public String deleteForeverNote(NoteDTO noteDTO) {
-        NoteDetails details = noteRepository.findByNote_Id(noteDTO.noteId);
+    public String deleteForeverNote(Long noteId) {
+        NoteDetails details = noteRepository.findByNote_Id(noteId);
         if(details == null){
             throw new FundooException(FundooException.ExceptionType.INVALID_NOTE,"Invalid Note");
         }

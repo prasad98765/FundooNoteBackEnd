@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class NoteDTO {
 
-    public String noteId;
+    public Long noteId;
 
     @NotNull
     public String title;

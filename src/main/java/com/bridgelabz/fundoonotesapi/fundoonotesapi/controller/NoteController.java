@@ -29,6 +29,48 @@ public class NoteController {
         return new ResponseEntity(response, HttpStatus.OK);
     }
 
+    @PostMapping("/updateNote")
+    public ResponseEntity updateNote(@RequestHeader("token") String token , @RequestBody NoteDTO noteDTO){
+        String message = noteService.updateNote(noteDTO);
+        Response response = new Response(message);
+        return new ResponseEntity(response,HttpStatus.OK);
+    }
+
+    @PostMapping("/pinUnpinNote/{noteId}")
+    public ResponseEntity updatePin(@RequestHeader("token") String token , @PathVariable Long noteId,  @RequestBody boolean isPined ){
+        String message = noteService.updatePin(noteId,isPined);
+        Response response = new Response(message);
+        return new ResponseEntity(response, HttpStatus.OK);
+    }
+
+    @PostMapping("/ArchivedUnArchivedNote/{noteId}")
+    public ResponseEntity updateArchived(@RequestHeader("token") String token,@PathVariable Long noteId , @RequestBody boolean isArchived ){
+        String message = noteService.updateArchived(noteId,isArchived);
+        Response response = new Response(message);
+        return new ResponseEntity(response, HttpStatus.OK);
+    }
+
+    @PostMapping("/colorNote/{noteId}")
+    public ResponseEntity<Response> updateColor(@RequestHeader("token") String token ,@PathVariable Long noteId, @RequestBody String color ){
+        String message = noteService.updateColor(noteId,color);
+        Response response = new Response(message);
+        return new ResponseEntity(response, HttpStatus.OK);
+    }
+
+    @PostMapping("/trashNote/{noteId}")
+    public ResponseEntity updateTrashNote(@RequestHeader("token") String token, @PathVariable Long noteId , @RequestBody boolean isDeleted){
+        String message = noteService.updateTrashNote(noteId,isDeleted);
+        Response response = new Response(message);
+        return new ResponseEntity(response, HttpStatus.OK);
+    }
+
+    @PostMapping("/deleteForeverNote/{noteId}")
+    public ResponseEntity deleteForeverNote(@RequestHeader("token") String token,@PathVariable Long noteId){
+        String message = noteService.deleteForeverNote(noteId);
+        Response response = new Response(message);
+        return new ResponseEntity(response, HttpStatus.OK);
+    }
+
     @GetMapping("/allNoteList")
     public ResponseEntity<Response> noteList(@RequestParam("token") String token){
         List noteList = noteService.getNoteList(token);
@@ -36,30 +78,9 @@ public class NoteController {
         return new ResponseEntity(response, HttpStatus.OK);
     }
 
-    @PostMapping("/updateNote")
-    public ResponseEntity updateNote(@RequestHeader("token") String token , @RequestBody NoteDTO noteDTO ){
-        String message = noteService.updateNote(noteDTO);
-        Response response = new Response(message);
-        return new ResponseEntity(response,HttpStatus.OK);
-    }
-
-    @PostMapping("/pinUnpinNote")
-    public ResponseEntity updatePin(@RequestHeader("token") String token , @RequestBody NoteDTO noteDTO ){
-        String message = noteService.updatePin(noteDTO);
-        Response response = new Response(message);
-        return new ResponseEntity(response, HttpStatus.OK);
-    }
-
-    @GetMapping("/pinNoteList")
-    public ResponseEntity pinNoteList(@RequestParam("token") String token){
-        List message = noteService.pinNoteList(token);
-        Response response = new Response(message);
-        return new ResponseEntity(response, HttpStatus.OK);
-    }
-
-    @PostMapping("/ArchivedUnArchivedNote")
-    public ResponseEntity updateArchived(@RequestHeader("token") String token , @RequestBody NoteDTO noteDTO ){
-        String message = noteService.updateArchived(noteDTO);
+    @GetMapping("/trashNoteList")
+    public ResponseEntity<Response> trashNoteList(@RequestParam("token") String token){
+        List message = noteService.trashNoteList(token);
         Response response = new Response(message);
         return new ResponseEntity(response, HttpStatus.OK);
     }
@@ -71,32 +92,13 @@ public class NoteController {
         return new ResponseEntity(response, HttpStatus.OK);
     }
 
-    @PostMapping("/colorNote")
-    public ResponseEntity<Response> updateColor(@RequestHeader("token") String token , @RequestBody NoteDTO noteDTO ){
-        String message = noteService.updateColor(noteDTO);
+    @GetMapping("/pinNoteList")
+    public ResponseEntity pinNoteList(@RequestParam("token") String token){
+        List message = noteService.pinNoteList(token);
         Response response = new Response(message);
         return new ResponseEntity(response, HttpStatus.OK);
     }
 
-    @PostMapping("/trashNote")
-    public ResponseEntity updateTrashNote(@RequestHeader("token") String token, @RequestBody NoteDTO noteDTO){
-        String message = noteService.updateTrashNote(noteDTO);
-        Response response = new Response(message);
-        return new ResponseEntity(response, HttpStatus.OK);
-    }
 
-    @GetMapping("/trashNoteList")
-    public ResponseEntity<Response> trashNoteList(@RequestParam("token") String token){
-        List message = noteService.trashNoteList(token);
-        Response response = new Response(message);
-        return new ResponseEntity(response, HttpStatus.OK);
-    }
-
-    @PostMapping("/deleteForeverNote")
-    public ResponseEntity deleteForeverNote(@RequestHeader("token") String token, @RequestBody NoteDTO noteDTO){
-        String message = noteService.deleteForeverNote(noteDTO);
-        Response response = new Response(message);
-        return new ResponseEntity(response, HttpStatus.OK);
-    }
 
 }

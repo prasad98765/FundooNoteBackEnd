@@ -8,12 +8,13 @@ public interface NoteServiceInterface {
     void saveNote(NoteDTO noteDTO, String token);
     List getNoteList(String token);
     String updateNote(NoteDTO noteDTO);
-    String updatePin(NoteDTO noteDTO);
+    String updatePin(Long noteId, boolean isPined);
     List pinNoteList(String token);
-    String updateArchived(NoteDTO noteDTO);
+    String updateArchived(Long noteId, boolean isArchived);
     List archivedNoteList(String token);
-    String updateColor(NoteDTO noteDTO);
-    String updateTrashNote(NoteDTO noteDTO);
+    String updateColor(Long noteId, String color);
+    String updateTrashNote(Long noteId, boolean isDeleted);
     List trashNoteList(String token);
-    String deleteForeverNote(NoteDTO noteDTO);
+    String deleteForeverNote(Long noteId);
+
 }
