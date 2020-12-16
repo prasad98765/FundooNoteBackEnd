@@ -38,5 +38,12 @@ public class LabelController {
         return new ResponseEntity(response, HttpStatus.OK);
     }
 
+    @PostMapping("/addLabelToNotes/{noteId}/{labelId}")
+    public ResponseEntity addLabelToNotes(@RequestParam("token") String token,@PathVariable Long noteId, @PathVariable Long labelId ){
+        String message = labelService.addLabelToNotes(noteId,labelId);
+        Response response = new Response(message);
+        return new ResponseEntity(response, HttpStatus.OK);
+    }
+
 
 }

@@ -24,15 +24,18 @@ public class LabelDetails implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     public long id;
 
     public String labelName;
 
     public Date createdDate;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "userDetails_id",nullable = false)
     private UserDetails userDetails;
+
 
 
     public void setLabelName(String labelName) {

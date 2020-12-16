@@ -7,10 +7,7 @@ import lombok.ToString;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @ToString
 @Getter
@@ -21,7 +18,7 @@ public class NoteDetails implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public String note_Id;
+    public long note_Id;
     public String title;
     public Boolean isPined;
     public String description;
@@ -34,6 +31,20 @@ public class NoteDetails implements Serializable {
     @JoinColumn(name = "userDetails_id",nullable = false)
     private UserDetails userDetails;
 
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "LabelDetails_id",nullable = false)
+    private List<LabelDetails> labelDetail;
+
+    public void LabelDetails(LabelDetails labelDetails) {
+        if(labelDetails == null){
+            labelDetail = new ArrayList<>();
+        }
+        labelDetail.add(labelDetails);
+    }
+
+    public List<LabelDetails> getLabelDetail() {
+        return labelDetail;
+    }
 
     public NoteDetails() {
     }
@@ -72,5 +83,6 @@ public class NoteDetails implements Serializable {
         this.isDeleted = noteDTO.isDeleted;
         this.userDetails = userDetails;
     }
+
 
 }

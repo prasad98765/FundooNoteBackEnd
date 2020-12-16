@@ -6,6 +6,7 @@ import com.bridgelabz.fundoonotesapi.fundoonotesapi.module.LabelDetails;
 import com.bridgelabz.fundoonotesapi.fundoonotesapi.module.NoteDetails;
 import com.bridgelabz.fundoonotesapi.fundoonotesapi.module.UserDetails;
 import com.bridgelabz.fundoonotesapi.fundoonotesapi.repository.LabelRepository;
+import com.bridgelabz.fundoonotesapi.fundoonotesapi.repository.NoteRepository;
 import com.bridgelabz.fundoonotesapi.fundoonotesapi.repository.UserRepository;
 import com.bridgelabz.fundoonotesapi.fundoonotesapi.util.JwtToken;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,9 @@ public class LabelService implements LabelServiceInterface {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    NoteRepository noteRepository;
 
     @Autowired
     private JwtToken jwtToken;
@@ -62,5 +66,14 @@ public class LabelService implements LabelServiceInterface {
         }catch (Exception e){
             throw new FundooException(FundooException.ExceptionType.INVALID_DATA,"INVALID DATA");
         }
+    }
+
+    @Override
+    public String addLabelToNotes(Long noteId, Long labelId) {
+        NoteDetails details = noteRepository.findByNote_Id(noteId);
+        LabelDetails labeldetails = labelRepository.findById(labelId);
+        details.LabelDetails(labeldetails);
+        noteRepository.save(details);
+        return "Added Label to Note";
     }
 }

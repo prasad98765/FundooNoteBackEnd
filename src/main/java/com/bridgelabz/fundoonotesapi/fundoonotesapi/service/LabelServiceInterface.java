@@ -10,4 +10,6 @@ public interface LabelServiceInterface {
     List noteLabelList(String token);
 
     String updatelabel(Long noteId, String labelName);
+
+    String addLabelToNotes(Long noteId, Long labelId);
 }
