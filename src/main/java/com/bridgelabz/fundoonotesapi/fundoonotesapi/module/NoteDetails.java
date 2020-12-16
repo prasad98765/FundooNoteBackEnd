@@ -8,6 +8,9 @@ import lombok.ToString;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @ToString
 @Getter
@@ -30,6 +33,7 @@ public class NoteDetails implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "userDetails_id",nullable = false)
     private UserDetails userDetails;
+
 
     public NoteDetails() {
     }
