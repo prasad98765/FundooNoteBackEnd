@@ -1,6 +1,7 @@
 package com.bridgelabz.fundoonotesapi.fundoonotesapi.module;
 
 import com.bridgelabz.fundoonotesapi.fundoonotesapi.dto.NoteDTO;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -29,10 +30,12 @@ public class NoteDetails implements Serializable {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "userDetails_id",nullable = false)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private UserDetails userDetails;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "LabelDetails_id",nullable = false)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private List<LabelDetails> labelDetail;
 
     public void LabelDetails(LabelDetails labelDetails) {
@@ -45,6 +48,7 @@ public class NoteDetails implements Serializable {
     public void removeLabelDetails(LabelDetails labelDetails) {
         labelDetail.remove(labelDetails);
     }
+
 
     public List<LabelDetails> getLabelDetail() {
         return labelDetail;

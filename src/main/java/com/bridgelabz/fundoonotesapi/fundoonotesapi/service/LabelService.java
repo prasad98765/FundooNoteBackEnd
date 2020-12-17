@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class LabelService implements LabelServiceInterface {
@@ -110,4 +111,19 @@ public class LabelService implements LabelServiceInterface {
         labelRepository.deleteById(labelId);
         return "Label Deleted Successfully";
     }
+
+    @Override
+    public List getLabelNotes(String token,Long labelId) {
+        String id = jwtToken.getDataFromToken(token);
+        if(id == null){
+            throw new FundooException(FundooException.ExceptionType.INVALID_TOKEN,"Invalid Token");
+        }
+        UserDetails users = userRepository.findByEmail(id);
+        if(labelId == null){
+            throw new FundooException(FundooException.ExceptionType.INVALID_NOTE,"Invalid Label ID");
+        }
+        List<NoteDetails> noteList =  noteRepository.findByLabelNote_Id(labelId,users.id);
+        return noteList;
+    }
+
 }

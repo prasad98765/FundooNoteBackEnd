@@ -99,6 +99,4 @@ public class NoteController {
         return new ResponseEntity(response, HttpStatus.OK);
     }
 
-
-
 }

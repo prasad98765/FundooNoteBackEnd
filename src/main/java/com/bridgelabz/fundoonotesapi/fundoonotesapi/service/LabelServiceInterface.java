@@ -16,4 +16,6 @@ public interface LabelServiceInterface {
     String removeLabelToNotes(Long noteId, Long labelId);
 
     String deleteNoteLabel(Long labelId);
+
+    List getLabelNotes(String token,Long labelId);
 }

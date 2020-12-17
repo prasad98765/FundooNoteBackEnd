@@ -2,6 +2,7 @@ package com.bridgelabz.fundoonotesapi.fundoonotesapi.controller;
 
 import com.bridgelabz.fundoonotesapi.fundoonotesapi.dto.LabelDTO;
 import com.bridgelabz.fundoonotesapi.fundoonotesapi.dto.Response;
+import com.bridgelabz.fundoonotesapi.fundoonotesapi.module.NoteDetails;
 import com.bridgelabz.fundoonotesapi.fundoonotesapi.service.LabelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -58,4 +59,12 @@ public class LabelController {
         Response response = new Response(message);
         return new ResponseEntity(response, HttpStatus.OK);
     }
+
+    @GetMapping("/getLabelNotes/{labelId}")
+    public ResponseEntity getLabelNotes(@RequestParam("token") String token, @PathVariable Long labelId ){
+        List message = labelService.getLabelNotes(token,labelId);
+        Response response = new Response(message);
+        return new ResponseEntity(response, HttpStatus.OK);
+    }
+
 }

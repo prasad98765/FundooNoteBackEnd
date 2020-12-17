@@ -37,7 +37,6 @@ public class LabelDetails implements Serializable {
     private UserDetails userDetails;
 
 
-
     public void setLabelName(String labelName) {
         this.labelName = labelName;
     }

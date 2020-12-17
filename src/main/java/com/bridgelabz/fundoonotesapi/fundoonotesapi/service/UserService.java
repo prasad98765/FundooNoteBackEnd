@@ -53,6 +53,7 @@ public class UserService implements UserServiceInterface {
     @Override
     public UserDetails signIn(String email, String password) {
         UserDetails userDetails = userRepository.findByEmail(email);
+        System.out.println(userDetails);
         if(new BCryptPasswordEncoder().matches(password,userDetails.password)){
             return userDetails;
         }else{

@@ -16,4 +16,5 @@ public interface LabelRepository extends JpaRepository<LabelDetails, Integer> {
     @Transactional
     @Modifying
     void deleteById(Long id);
+
 }
