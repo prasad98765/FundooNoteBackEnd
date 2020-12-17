@@ -45,5 +45,11 @@ public class LabelController {
         return new ResponseEntity(response, HttpStatus.OK);
     }
 
+    @PostMapping("/removeLabelToNotes/{noteId}/{labelId}")
+    public ResponseEntity removeLabelToNotes(@RequestParam("token") String token,@PathVariable Long noteId, @PathVariable Long labelId ){
+        String message = labelService.removeLabelToNotes(noteId,labelId);
+        Response response = new Response(message);
+        return new ResponseEntity(response, HttpStatus.OK);
+    }
 
 }

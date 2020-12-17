@@ -12,4 +12,6 @@ public interface LabelServiceInterface {
     String updatelabel(Long noteId, String labelName);
 
     String addLabelToNotes(Long noteId, Long labelId);
+
+    String removeLabelToNotes(Long noteId, Long labelId);
 }

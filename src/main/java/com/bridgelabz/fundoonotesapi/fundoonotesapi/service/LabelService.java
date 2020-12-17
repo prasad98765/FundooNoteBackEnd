@@ -70,10 +70,35 @@ public class LabelService implements LabelServiceInterface {
 
     @Override
     public String addLabelToNotes(Long noteId, Long labelId) {
-        NoteDetails details = noteRepository.findByNote_Id(noteId);
-        LabelDetails labeldetails = labelRepository.findById(labelId);
-        details.LabelDetails(labeldetails);
-        noteRepository.save(details);
-        return "Added Label to Note";
+        try{
+            NoteDetails details = noteRepository.findByNote_Id(noteId);
+            if(details == null){
+                throw new FundooException(FundooException.ExceptionType.INVALID_NOTE,"Invalid Note");
+            }
+            LabelDetails labeldetails = labelRepository.findById(labelId);
+            if(labeldetails == null){
+                throw new FundooException(FundooException.ExceptionType.INVALID_NOTE,"Invalid Label");
+            }
+            details.LabelDetails(labeldetails);
+            noteRepository.save(details);
+            return "Added Label to Note";
+        }catch (Exception e){
+            throw new FundooException(FundooException.ExceptionType.INVALID_DATA,"INVALID DATA");
+        }
+    }
+
+    @Override
+    public String removeLabelToNotes(Long noteId, Long labelId) {
+            NoteDetails details = noteRepository.findByNote_Id(noteId);
+            if(details == null){
+                throw new FundooException(FundooException.ExceptionType.INVALID_NOTE,"Invalid Note");
+            }
+            LabelDetails labeldetails = labelRepository.findById(labelId);
+            if(labeldetails == null){
+                throw new FundooException(FundooException.ExceptionType.INVALID_NOTE,"Invalid Label");
+            }
+            details.removeLabelDetails(labeldetails);
+            noteRepository.save(details);
+            return "Deleted Label to Note";
     }
 }

@@ -42,6 +42,10 @@ public class NoteDetails implements Serializable {
         labelDetail.add(labelDetails);
     }
 
+    public void removeLabelDetails(LabelDetails labelDetails) {
+        labelDetail.remove(labelDetails);
+    }
+
     public List<LabelDetails> getLabelDetail() {
         return labelDetail;
     }
