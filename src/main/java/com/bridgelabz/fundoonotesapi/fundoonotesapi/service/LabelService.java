@@ -101,4 +101,13 @@ public class LabelService implements LabelServiceInterface {
             noteRepository.save(details);
             return "Deleted Label to Note";
     }
+
+    @Override
+    public String deleteNoteLabel(Long labelId) {
+        if(labelId == null){
+            throw new FundooException(FundooException.ExceptionType.INVALID_NOTE,"Invalid Label ID");
+        }
+        labelRepository.deleteById(labelId);
+        return "Label Deleted Successfully";
+    }
 }

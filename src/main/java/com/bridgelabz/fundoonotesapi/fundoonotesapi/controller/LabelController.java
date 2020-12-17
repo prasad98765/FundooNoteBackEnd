@@ -52,4 +52,10 @@ public class LabelController {
         return new ResponseEntity(response, HttpStatus.OK);
     }
 
+    @DeleteMapping("/deleteNoteLabel/{labelId}")
+    public ResponseEntity deleteNoteLabel(@RequestParam("token") String token, @PathVariable Long labelId ){
+        String message = labelService.deleteNoteLabel(labelId);
+        Response response = new Response(message);
+        return new ResponseEntity(response, HttpStatus.OK);
+    }
 }
