@@ -38,6 +38,18 @@ public class NoteDetails implements Serializable {
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private List<LabelDetails> labelDetail;
 
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "userDetails_id",nullable = false)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    private List<UserDetails> collaborators;
+
+    public void collaboratorsDetails(UserDetails userDetails) {
+        if(userDetails == null){
+            collaborators = new ArrayList<>();
+        }
+        collaborators.add(userDetails);
+    }
+
     public void LabelDetails(LabelDetails labelDetails) {
         if(labelDetails == null){
             labelDetail = new ArrayList<>();
