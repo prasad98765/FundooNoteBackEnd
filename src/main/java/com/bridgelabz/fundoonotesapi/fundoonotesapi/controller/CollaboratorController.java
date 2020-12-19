@@ -6,9 +6,7 @@ import com.bridgelabz.fundoonotesapi.fundoonotesapi.service.CollaboratorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -22,6 +20,13 @@ public class CollaboratorController {
     public ResponseEntity getAllUsers(){
         List<UserDetails> details = collaboratorService.getAllUsers();
         Response response = new Response(details);
+        return new ResponseEntity(response, HttpStatus.OK);
+    }
+
+    @PostMapping("/addCollaboratorsNotes/{userId}/{noteId}")
+    public ResponseEntity addCollaboratorsNotes(@PathVariable int userId, @PathVariable Long noteId ){
+        String message = collaboratorService.addCollaboratorsNotes(userId,noteId);
+        Response response = new Response(message);
         return new ResponseEntity(response, HttpStatus.OK);
     }
 }

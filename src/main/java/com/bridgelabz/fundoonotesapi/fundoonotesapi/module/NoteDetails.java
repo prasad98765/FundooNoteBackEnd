@@ -50,6 +50,11 @@ public class NoteDetails implements Serializable {
         collaborators.add(userDetails);
     }
 
+    public void removeCollaboratorsDetail(UserDetails userDetails) {
+        collaborators.remove(userDetails);
+    }
+
+
     public void LabelDetails(LabelDetails labelDetails) {
         if(labelDetails == null){
             labelDetail = new ArrayList<>();
