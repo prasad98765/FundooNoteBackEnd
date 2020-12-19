@@ -9,4 +9,5 @@ public interface CollaboratorServiceInterface {
 
     String addCollaboratorsNotes(int userId, Long noteId);
 
+    String deleteCollaboratorsNotes(int userId, Long noteId);
 }

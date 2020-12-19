@@ -29,4 +29,11 @@ public class CollaboratorController {
         Response response = new Response(message);
         return new ResponseEntity(response, HttpStatus.OK);
     }
+
+    @DeleteMapping("/addCollaboratorsNotes/{userId}/{noteId}")
+    public ResponseEntity deleteCollaboratorsNotes(@PathVariable int userId, @PathVariable Long noteId ){
+        String message = collaboratorService.deleteCollaboratorsNotes(userId,noteId);
+        Response response = new Response(message);
+        return new ResponseEntity(response, HttpStatus.OK);
+    }
 }
