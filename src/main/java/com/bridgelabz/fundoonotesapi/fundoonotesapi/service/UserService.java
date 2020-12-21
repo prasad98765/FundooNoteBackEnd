@@ -25,6 +25,10 @@ public class UserService implements UserServiceInterface {
     @Override
     public String addUser(UserDTO userdto){
         try{
+            UserDetails Details = userRepository.findByEmail(userdto.email);
+            if(Details != null){
+                throw new FundooException(FundooException.ExceptionType.USER_ALREADY_REGISTERED,"User Already Registered");
+            }
             UserDetails userDetails = new UserDetails(userdto);
             UserDetails userDetails1 =  userRepository.save(userDetails);
             String Token  = jwtToken.generateToken(userDetails1.email);

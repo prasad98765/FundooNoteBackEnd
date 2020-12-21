@@ -1,6 +1,7 @@
 package com.bridgelabz.fundoonotesapi.fundoonotesapi.controller;
 
 import com.bridgelabz.fundoonotesapi.fundoonotesapi.dto.Response;
+import com.bridgelabz.fundoonotesapi.fundoonotesapi.module.NoteDetails;
 import com.bridgelabz.fundoonotesapi.fundoonotesapi.module.UserDetails;
 import com.bridgelabz.fundoonotesapi.fundoonotesapi.service.CollaboratorService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,10 +31,17 @@ public class CollaboratorController {
         return new ResponseEntity(response, HttpStatus.OK);
     }
 
-    @DeleteMapping("/addCollaboratorsNotes/{userId}/{noteId}")
+    @DeleteMapping("/removeCollaboratorsNotes/{userId}/{noteId}")
     public ResponseEntity deleteCollaboratorsNotes(@PathVariable int userId, @PathVariable Long noteId ){
         String message = collaboratorService.deleteCollaboratorsNotes(userId,noteId);
         Response response = new Response(message);
+        return new ResponseEntity(response, HttpStatus.OK);
+    }
+
+    @GetMapping("/getAllCollaboratornotes")
+    public ResponseEntity getAllCollaboratornotes(@RequestParam("token") String token){
+        List<NoteDetails> details = collaboratorService.getAllCollaboratornotes(token);
+        Response response = new Response(details);
         return new ResponseEntity(response, HttpStatus.OK);
     }
 }

@@ -5,7 +5,6 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 @Component
-@AllArgsConstructor
 @NoArgsConstructor
 public class UserDTO {
     @NotNull
@@ -20,4 +19,11 @@ public class UserDTO {
     @NotNull
     public String service;
 
+    public UserDTO(@NotNull String firstName, @NotNull String lastName, @NotNull @Pattern(regexp = "^([a-zA-Z0-9_\\-\\.]+)@([a-zA-Z0-9_\\-\\.]+)\\.([a-zA-Z]{2,5})$") String email, @NotNull String password, @NotNull String service) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
+        this.service = service;
+    }
 }

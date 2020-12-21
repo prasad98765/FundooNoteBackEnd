@@ -25,4 +25,9 @@ public interface NoteRepository extends JpaRepository<NoteDetails, Integer>  {
 
     @Query(value = "SELECT * FROM note_details u INNER JOIN note_details_label_detail ue on ue.note_details_note_id = u.note_Id where ue.label_detail_id=?1 and u.user_details_id=?2 ", nativeQuery=true)
     List<NoteDetails> findByLabelNote_Id(Long id, int i);
+
+    @Query(value = "SELECT * FROM note_details u INNER JOIN note_details_collaborators ue on ue.note_details_note_id = u.note_Id where u.user_details_id=?1 ", nativeQuery=true)
+    List<NoteDetails> findByCollaboratorsNote_Id(int i);
+
+
 }

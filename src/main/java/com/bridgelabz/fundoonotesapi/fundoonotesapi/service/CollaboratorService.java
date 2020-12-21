@@ -5,6 +5,7 @@ import com.bridgelabz.fundoonotesapi.fundoonotesapi.module.NoteDetails;
 import com.bridgelabz.fundoonotesapi.fundoonotesapi.module.UserDetails;
 import com.bridgelabz.fundoonotesapi.fundoonotesapi.repository.NoteRepository;
 import com.bridgelabz.fundoonotesapi.fundoonotesapi.repository.UserRepository;
+import com.bridgelabz.fundoonotesapi.fundoonotesapi.util.JwtToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +19,9 @@ public class CollaboratorService implements CollaboratorServiceInterface {
 
     @Autowired
     NoteRepository noteRepository;
+
+    @Autowired
+    JwtToken jwtToken;
 
     @Override
     public List getAllUsers() {
@@ -53,5 +57,13 @@ public class CollaboratorService implements CollaboratorServiceInterface {
         details.removeCollaboratorsDetail(userDetails);
         noteRepository.save(details);
         return "Delete collaborator to note";
+    }
+
+    @Override
+    public List<NoteDetails> getAllCollaboratornotes(String token) {
+        String id = jwtToken.getDataFromToken(token);
+        UserDetails users = userRepository.findByEmail(id);
+        List<NoteDetails> userDetails = noteRepository.findByCollaboratorsNote_Id(users.id);
+        return userDetails;
     }
 }
