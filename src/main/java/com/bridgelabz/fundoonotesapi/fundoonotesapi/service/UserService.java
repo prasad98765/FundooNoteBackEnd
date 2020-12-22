@@ -42,6 +42,7 @@ public class UserService implements UserServiceInterface {
 
     @Override
     public String confirmEmailAccount(String token) {
+        System.out.println("abababa"+token);
         try{
             String id = jwtToken.getDataFromToken(token);
             UserDetails users = userRepository.findByEmail(id);
@@ -57,6 +58,9 @@ public class UserService implements UserServiceInterface {
     @Override
     public UserDetails signIn(String email, String password) {
         UserDetails userDetails = userRepository.findByEmail(email);
+        if(userDetails == null){
+            throw new FundooException(FundooException.ExceptionType.INVALID_EMAIL,"INVALID EMAIL");
+        }
         System.out.println(userDetails);
         if(new BCryptPasswordEncoder().matches(password,userDetails.password)){
             return userDetails;
@@ -81,6 +85,9 @@ public class UserService implements UserServiceInterface {
     @Override
     public String resetPassword(String token) {
         String id = jwtToken.getDataFromToken(token);
+        if(id == null){
+            throw new FundooException(FundooException.ExceptionType.INVALID_TOKEN,"INVALID TOKEN");
+        }
         UserDetails userDetails = userRepository.findByEmail(id);
         if(jwtToken.validateToken(token,userDetails.email)) {
             return "Valid Token";
@@ -93,7 +100,7 @@ public class UserService implements UserServiceInterface {
     @Override
     public String changePassword(UserDTO userDTO, String token) {
         String id = jwtToken.getDataFromToken(token);
-        UserDetails users = userRepository.findById(id);
+        UserDetails users = userRepository.findByEmail(id);
         if(users == null){
             throw new FundooException(FundooException.ExceptionType.INVALID_USER,"Invalid User");
         }
