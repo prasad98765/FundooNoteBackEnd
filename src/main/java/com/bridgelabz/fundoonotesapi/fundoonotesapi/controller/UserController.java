@@ -1,5 +1,7 @@
 package com.bridgelabz.fundoonotesapi.fundoonotesapi.controller;
 import java.net.URI;
+import java.util.Optional;
+
 import com.bridgelabz.fundoonotesapi.fundoonotesapi.dto.Response;
 import com.bridgelabz.fundoonotesapi.fundoonotesapi.dto.UserDTO;
 import com.bridgelabz.fundoonotesapi.fundoonotesapi.exception.FundooException;
@@ -32,8 +34,8 @@ public class UserController {
         if(result.hasErrors()){
             throw new FundooException(FundooException.ExceptionType.INVALID_DATA,"INVALID DATA");
         }
-        UserDetails userDetails = userRepository.findByEmail(userDTO.email);
-        if(userDetails != null){
+        Optional<UserDetails> userDetails = userRepository.findByEmail(userDTO.email);
+        if(userDetails.isPresent()){
             throw new FundooException(FundooException.ExceptionType.USER_ALREADY_REGISTERED,"User Already Registered");
         }
             String message = userService.addUser(userDTO);

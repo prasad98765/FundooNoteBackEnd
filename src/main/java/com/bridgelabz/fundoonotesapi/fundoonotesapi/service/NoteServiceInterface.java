@@ -5,7 +5,7 @@ import com.bridgelabz.fundoonotesapi.fundoonotesapi.dto.NoteDTO;
 import java.util.List;
 
 public interface NoteServiceInterface {
-    void saveNote(NoteDTO noteDTO, String token);
+    String saveNote(NoteDTO noteDTO, String token);
     List getNoteList(String token);
     String updateNote(NoteDTO noteDTO);
     String updatePin(Long noteId, boolean isPined);

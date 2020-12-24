@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CollaboratorService implements CollaboratorServiceInterface {
@@ -62,8 +63,8 @@ public class CollaboratorService implements CollaboratorServiceInterface {
     @Override
     public List<NoteDetails> getAllCollaboratornotes(String token) {
         String id = jwtToken.getDataFromToken(token);
-        UserDetails users = userRepository.findByEmail(id);
-        List<NoteDetails> userDetails = noteRepository.findByCollaboratorsNote_Id(users.id);
+        Optional<UserDetails> users = userRepository.findByEmail(id);
+        List<NoteDetails> userDetails = noteRepository.findByCollaboratorsNote_Id(users.get().id);
         return userDetails;
     }
 }

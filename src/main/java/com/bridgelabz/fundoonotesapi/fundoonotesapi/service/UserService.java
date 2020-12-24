@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class UserService implements UserServiceInterface {
 
@@ -24,9 +26,8 @@ public class UserService implements UserServiceInterface {
 
     @Override
     public String addUser(UserDTO userdto){
-        try{
-            UserDetails Details = userRepository.findByEmail(userdto.email);
-            if(Details != null){
+            Optional<UserDetails> details = userRepository.findByEmail(userdto.email);
+            if(details.isPresent()){
                 throw new FundooException(FundooException.ExceptionType.USER_ALREADY_REGISTERED,"User Already Registered");
             }
             UserDetails userDetails = new UserDetails(userdto);
@@ -34,10 +35,6 @@ public class UserService implements UserServiceInterface {
             String Token  = jwtToken.generateToken(userDetails1.email);
             sendEmail.sendEmail(userDetails1.email,Token);
             return "Your Account Created Successfully";
-        } catch (Exception e){
-            throw new FundooException(FundooException.ExceptionType.INVALID_DATA,"INVALID DATA");
-        }
-
     }
 
     @Override
@@ -45,9 +42,9 @@ public class UserService implements UserServiceInterface {
         System.out.println("abababa"+token);
         try{
             String id = jwtToken.getDataFromToken(token);
-            UserDetails users = userRepository.findByEmail(id);
-            users.setVerified(true);
-            userRepository.save(users);
+            Optional<UserDetails>  users = userRepository.findByEmail(id);
+            users.get().setVerified(true);
+            userRepository.save(users.get());
             return "User Email Account is Verified";
         }catch (Exception e){
             throw new FundooException(FundooException.ExceptionType.INVALID_LINK,"INVALID LINK");
@@ -57,13 +54,13 @@ public class UserService implements UserServiceInterface {
 
     @Override
     public UserDetails signIn(String email, String password) {
-        UserDetails userDetails = userRepository.findByEmail(email);
+        Optional<UserDetails>  userDetails = userRepository.findByEmail(email);
         if(userDetails == null){
             throw new FundooException(FundooException.ExceptionType.INVALID_EMAIL,"INVALID EMAIL");
         }
         System.out.println(userDetails);
-        if(new BCryptPasswordEncoder().matches(password,userDetails.password)){
-            return userDetails;
+        if(new BCryptPasswordEncoder().matches(password,userDetails.get().password)){
+            return userDetails.get();
         }else{
             throw new FundooException(FundooException.ExceptionType.INVALID_PASSWORD,"INVALID PASSWORD");
         }
@@ -72,11 +69,11 @@ public class UserService implements UserServiceInterface {
 
     @Override
     public String forgotPassword(String email) {
-        UserDetails userDetails = userRepository.findByEmail(email);
+        Optional<UserDetails>  userDetails = userRepository.findByEmail(email);
         if(userDetails == null){
             throw new FundooException(FundooException.ExceptionType.INVALID_EMAIL,"Invalid Email");
         }
-        String Token = jwtToken.generateToken(userDetails.email);
+        String Token = jwtToken.generateToken(userDetails.get().email);
         System.out.println(Token);
         sendEmail.forgotPasswordEmail(email,Token);
         return "Reset Password Link Sent to your Email Id";
@@ -88,8 +85,8 @@ public class UserService implements UserServiceInterface {
         if(id == null){
             throw new FundooException(FundooException.ExceptionType.INVALID_TOKEN,"INVALID TOKEN");
         }
-        UserDetails userDetails = userRepository.findByEmail(id);
-        if(jwtToken.validateToken(token,userDetails.email)) {
+        Optional<UserDetails>  userDetails = userRepository.findByEmail(id);
+        if(jwtToken.validateToken(token,userDetails.get().email)) {
             return "Valid Token";
         }else{
             throw new FundooException(FundooException.ExceptionType.INVALID_LINK,"Invalid Link");
@@ -99,14 +96,20 @@ public class UserService implements UserServiceInterface {
 
     @Override
     public String changePassword(UserDTO userDTO, String token) {
-        String id = jwtToken.getDataFromToken(token);
-        UserDetails users = userRepository.findByEmail(id);
-        if(users == null){
-            throw new FundooException(FundooException.ExceptionType.INVALID_USER,"Invalid User");
+        try{
+            String id = jwtToken.getDataFromToken(token);
+            Optional<UserDetails>  users = userRepository.findByEmail(id);
+            if(users == null){
+                throw new FundooException(FundooException.ExceptionType.INVALID_USER,"Invalid User");
+            }
+
+            String password = new BCryptPasswordEncoder().encode(userDTO.password);
+            users.get().setPassword(password);
+            userRepository.save(users.get());
+            return "Password Change Successfully";
+        }catch (Exception e){
+            throw new FundooException(FundooException.ExceptionType.INVALID_DATA,"INVALID LINK");
         }
-        String password = new BCryptPasswordEncoder().encode(userDTO.password);
-        users.setPassword(password);
-        userRepository.save(users);
-        return "Password Change Successfully";
+
     }
 }

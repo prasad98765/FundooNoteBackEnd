@@ -17,6 +17,7 @@ import java.util.*;
 @Table(name = "noteDetails")
 public class NoteDetails implements Serializable {
 
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public long note_Id;
@@ -29,17 +30,17 @@ public class NoteDetails implements Serializable {
     public Date createdDate;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "userDetails_id",nullable = false)
+    @JoinColumn(name = "userDetails_id")
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private UserDetails userDetails;
 
     @ManyToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "LabelDetails_id",nullable = false)
+    @JoinColumn(name = "LabelDetails_id")
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private List<LabelDetails> labelDetail;
 
     @ManyToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "userDetails_id",nullable = false)
+    @JoinColumn(name = "userDetails_id")
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private List<UserDetails> collaborators;
 

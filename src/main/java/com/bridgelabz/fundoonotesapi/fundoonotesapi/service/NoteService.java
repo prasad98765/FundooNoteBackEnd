@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class NoteService implements NoteServiceInterface {
@@ -25,22 +26,31 @@ public class NoteService implements NoteServiceInterface {
     private JwtToken jwtToken;
 
     @Override
-    public void saveNote(NoteDTO noteDTO, String token) {
-        String id = jwtToken.getDataFromToken(token);
-        UserDetails users = userRepository.findByEmail(id);
-        NoteDetails noteDetails = new NoteDetails(noteDTO,users);
-        noteRepository.save(noteDetails);
+    public String saveNote(NoteDTO noteDTO, String token) {
+        try{
+            String id = jwtToken.getDataFromToken(token);
+            Optional<UserDetails> users = userRepository.findByEmail(id);
+            System.out.println(users);
+            NoteDetails noteDetails = new NoteDetails(noteDTO,users.get());
+            System.out.println(noteDetails);
+            noteRepository.save(noteDetails);
+            return "Note Successfully save";
+        }catch (FundooException e){
+            throw new FundooException(FundooException.ExceptionType.INVALID_DATA,"INVALID DATA");
+        }
+
     }
 
     @Override
     public List getNoteList(String token) {
-        String id = jwtToken.getDataFromToken(token);
-        if(id == null){
-            throw new FundooException(FundooException.ExceptionType.INVALID_TOKEN,"Invalid Token");
-        }
-        UserDetails users = userRepository.findByEmail(id);
-        List<NoteDetails> noteList = noteRepository.findByUserDetailsId(users.id);
-        return noteList;
+            String id = jwtToken.getDataFromToken(token);
+            Optional<UserDetails> users = userRepository.findByEmail(id);
+            System.out.println(users);
+            if (users.isEmpty()){
+                throw new FundooException(FundooException.ExceptionType.INVALID_TOKEN,"INVALID TOKEN");
+            }
+            List<NoteDetails> noteList = noteRepository.findByUserDetailsId(users.get().id);
+            return noteList;
     }
     @Override
     public String updateNote(NoteDTO noteDTO) {
@@ -71,8 +81,8 @@ public class NoteService implements NoteServiceInterface {
         if(id == null){
             throw new FundooException(FundooException.ExceptionType.INVALID_TOKEN,"Invalid Token");
         }
-        UserDetails users = userRepository.findByEmail(id);
-        List<NoteDetails> noteList = noteRepository.findByUserDetailsIdAndIsPinedTrue(users.id);
+        Optional<UserDetails> users = userRepository.findByEmail(id);
+        List<NoteDetails> noteList = noteRepository.findByUserDetailsIdAndIsPinedTrue(users.get().id);
         return noteList;
     }
 
@@ -93,8 +103,8 @@ public class NoteService implements NoteServiceInterface {
         if(id == null){
             throw new FundooException(FundooException.ExceptionType.INVALID_TOKEN,"Invalid Token");
         }
-        UserDetails users = userRepository.findByEmail(id);
-        List<NoteDetails> noteList = noteRepository.findByUserDetailsIdAndIsArchivedTrue(users.id);
+        Optional<UserDetails> users = userRepository.findByEmail(id);
+        List<NoteDetails> noteList = noteRepository.findByUserDetailsIdAndIsArchivedTrue(users.get().id);
         return noteList;
     }
 
@@ -127,8 +137,8 @@ public class NoteService implements NoteServiceInterface {
         if(id == null){
             throw new FundooException(FundooException.ExceptionType.INVALID_TOKEN,"Invalid Token");
         }
-        UserDetails users = userRepository.findByEmail(id);
-        List<NoteDetails> noteList = noteRepository.findByUserDetailsIdAndIsDeletedTrue(users.id);
+        Optional<UserDetails> users = userRepository.findByEmail(id);
+        List<NoteDetails> noteList = noteRepository.findByUserDetailsIdAndIsDeletedTrue(users.get().id);
         return noteList;
     }
 

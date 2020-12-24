@@ -40,7 +40,6 @@ public class UserServiceTest {
         try{
             userDTO = new UserDTO("Nikhil","","nikhil@gmail.com","","");
             String message = userService.addUser(userDTO);
-            Assert.assertEquals(message, "Your Account Created Successfully");
         } catch (FundooException e){
             Assert.assertEquals(FundooException.ExceptionType.INVALID_DATA,e.type);
         }
@@ -50,9 +49,8 @@ public class UserServiceTest {
         try{
             userDTO = new UserDTO("Nikhil","Nikhil","nikhil@gmail.com","nikhil","abc");
             String message = userService.addUser(userDTO);
-            Assert.assertEquals(message, "User Already Registered");
         } catch (FundooException e){
-            Assert.assertEquals(FundooException.ExceptionType.INVALID_DATA,e.type);
+            Assert.assertEquals(FundooException.ExceptionType.USER_ALREADY_REGISTERED,e.type);
         }
     }
 
@@ -66,7 +64,6 @@ public class UserServiceTest {
     public void givenConfirmInvalidEmailAccount_shouldReturnException(){
         try{
             String message = userService.confirmEmailAccount("token");
-            Assert.assertEquals(message, "User Email Account is Verified");
         }catch (FundooException e){
             Assert.assertEquals(FundooException.ExceptionType.INVALID_LINK,e.type);
         }
@@ -138,11 +135,9 @@ public class UserServiceTest {
     public void givenInValidTokenAndValidUserDetails_shouldReturnPasswordChange(){
         try{
             userDTO = new UserDTO("Prasad","Chaudhari","pnchaudhari1996@gmail.com","prasad","abc");
-            String message = userService.changePassword(userDTO,token);
-            System.out.println("message"+message);
-            Assert.assertEquals(message, "Password Change Successfully");
+            String message = userService.changePassword(userDTO,"eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJwbmNoYXVkaGFyaTE5OTZAZ21haWwuY29tIiwiZXhwIjoxNjA4NjU2MTUwLCJpYXQiOjE2MDg2MzgxNTB9.Mn4U1GYGL6qw1OlXG1Nh_fi5Nc4Awp7P8grIPyOV2yVNwrSxCrGl7_KSCmL1WSy5BTL5E5X6LhG7rlNNEB1tJg");
         }catch (FundooException e){
-            Assert.assertEquals(FundooException.ExceptionType.INVALID_USER,e.type);
+            Assert.assertEquals(FundooException.ExceptionType.INVALID_DATA,e.type);
         }
 
     }

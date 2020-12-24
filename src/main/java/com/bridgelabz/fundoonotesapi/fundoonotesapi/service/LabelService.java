@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -34,8 +35,8 @@ public class LabelService implements LabelServiceInterface {
     public String saveLabel(String token,LabelDTO labelDTO) {
         try{
             String id = jwtToken.getDataFromToken(token);
-            UserDetails users = userRepository.findByEmail(id);
-            LabelDetails labelDetails = new LabelDetails(labelDTO,users);
+            Optional<UserDetails> users = userRepository.findByEmail(id);
+            LabelDetails labelDetails = new LabelDetails(labelDTO,users.get());
             labelRepository.save(labelDetails);
             return "Label Added Successfully";
         }catch (Exception e){
@@ -49,8 +50,8 @@ public class LabelService implements LabelServiceInterface {
         if(id == null){
             throw new FundooException(FundooException.ExceptionType.INVALID_TOKEN,"Invalid Token");
         }
-        UserDetails users = userRepository.findByEmail(id);
-        List<LabelDetails> noteList = labelRepository.findByUserDetailsId(users.id);
+        Optional<UserDetails> users = userRepository.findByEmail(id);
+        List<LabelDetails> noteList = labelRepository.findByUserDetailsId(users.get().id);
         return noteList;
     }
 
@@ -80,7 +81,7 @@ public class LabelService implements LabelServiceInterface {
             if(labeldetails == null){
                 throw new FundooException(FundooException.ExceptionType.INVALID_NOTE,"Invalid Label");
             }
-            details.LabelDetails(labeldetails);
+//            details.LabelDetails(labeldetails);
             noteRepository.save(details);
             return "Added Label to Note";
         }catch (Exception e){
@@ -98,7 +99,7 @@ public class LabelService implements LabelServiceInterface {
             if(labeldetails == null){
                 throw new FundooException(FundooException.ExceptionType.INVALID_NOTE,"Invalid Label");
             }
-            details.removeLabelDetails(labeldetails);
+//            details.removeLabelDetails(labeldetails);
             noteRepository.save(details);
             return "Deleted Label to Note";
     }
@@ -118,11 +119,11 @@ public class LabelService implements LabelServiceInterface {
         if(id == null){
             throw new FundooException(FundooException.ExceptionType.INVALID_TOKEN,"Invalid Token");
         }
-        UserDetails users = userRepository.findByEmail(id);
+        Optional<UserDetails> users = userRepository.findByEmail(id);
         if(labelId == null){
             throw new FundooException(FundooException.ExceptionType.INVALID_NOTE,"Invalid Label ID");
         }
-        List<NoteDetails> noteList =  noteRepository.findByLabelNote_Id(labelId,users.id);
+        List<NoteDetails> noteList =  noteRepository.findByLabelNote_Id(labelId,users.get().id);
         return noteList;
     }
 

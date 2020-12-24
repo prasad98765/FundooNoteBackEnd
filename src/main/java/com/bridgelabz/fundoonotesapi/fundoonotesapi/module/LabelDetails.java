@@ -33,8 +33,11 @@ public class LabelDetails implements Serializable {
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "userDetails_id",nullable = false)
+    @JoinColumn(name = "userDetails_id")
     private UserDetails userDetails;
+
+    @ManyToMany(mappedBy = "labelDetail")
+    private List<NoteDetails> details;
 
 
     public void setLabelName(String labelName) {
