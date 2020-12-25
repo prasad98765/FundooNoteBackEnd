@@ -13,6 +13,7 @@ import java.util.List;
 @Repository
 public interface NoteRepository extends JpaRepository<NoteDetails, Integer>  {
     List<NoteDetails> findByUserDetailsId(int id);
+
     @Query(value = "SELECT * FROM note_details u WHERE u.note_Id=?1", nativeQuery=true)
     NoteDetails findByNote_Id(Long id);
     List<NoteDetails> findByUserDetailsIdAndIsPinedTrue(int id);

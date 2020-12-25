@@ -2,6 +2,7 @@ package com.bridgelabz.fundoonotesapi.fundoonotesapi.module;
 
 import com.bridgelabz.fundoonotesapi.fundoonotesapi.dto.NoteDTO;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -34,12 +35,12 @@ public class NoteDetails implements Serializable {
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private UserDetails userDetails;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JoinColumn(name = "LabelDetails_id")
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private List<LabelDetails> labelDetail;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JoinColumn(name = "userDetails_id")
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private List<UserDetails> collaborators;

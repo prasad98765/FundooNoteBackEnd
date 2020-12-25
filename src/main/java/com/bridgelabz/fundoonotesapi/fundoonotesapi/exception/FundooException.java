@@ -12,7 +12,8 @@ public class FundooException extends RuntimeException {
         INVALID_EMAIL,
         INVALID_USER,
         INVALID_NOTE,
-        INVALID_TOKEN;
+        INVALID_TOKEN,
+        INVALID_LABEL;
     }
 
     public FundooException(ExceptionType type,String message){

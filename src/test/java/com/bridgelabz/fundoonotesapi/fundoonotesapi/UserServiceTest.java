@@ -26,6 +26,7 @@ public class UserServiceTest {
     @BeforeEach
     public void token() throws Exception{
        this.token = jwtToken.generateToken("pnchaudhari1996@gmail.com");
+        System.out.println(token);
     }
 
     @Test

@@ -36,6 +36,9 @@ public class LabelService implements LabelServiceInterface {
         try{
             String id = jwtToken.getDataFromToken(token);
             Optional<UserDetails> users = userRepository.findByEmail(id);
+            if(users.isEmpty()){
+                throw new FundooException(FundooException.ExceptionType.INVALID_USER,"INVALID USER");
+            }
             LabelDetails labelDetails = new LabelDetails(labelDTO,users.get());
             labelRepository.save(labelDetails);
             return "Label Added Successfully";
@@ -47,10 +50,14 @@ public class LabelService implements LabelServiceInterface {
     @Override
     public List noteLabelList(String token) {
         String id = jwtToken.getDataFromToken(token);
-        if(id == null){
+        System.out.println(id);
+        if(id.isEmpty()){
             throw new FundooException(FundooException.ExceptionType.INVALID_TOKEN,"Invalid Token");
         }
         Optional<UserDetails> users = userRepository.findByEmail(id);
+        if(users.isEmpty()){
+            throw new FundooException(FundooException.ExceptionType.INVALID_TOKEN,"Invalid Token");
+        }
         List<LabelDetails> noteList = labelRepository.findByUserDetailsId(users.get().id);
         return noteList;
     }
@@ -59,34 +66,27 @@ public class LabelService implements LabelServiceInterface {
     public String updatelabel(Long noteId, String labelName) {
         try{
             LabelDetails details = labelRepository.findById(noteId);
-            if(details == null){
-                throw new FundooException(FundooException.ExceptionType.INVALID_NOTE,"Invalid Note");
-            }
             details.setLabelName(labelName);
             labelRepository.save(details);
             return "Label Updated Successfully";
         }catch (Exception e){
-            throw new FundooException(FundooException.ExceptionType.INVALID_DATA,"INVALID DATA");
+            throw new FundooException(FundooException.ExceptionType.INVALID_NOTE,"INVALID DATA");
         }
     }
 
     @Override
     public String addLabelToNotes(Long noteId, Long labelId) {
-        try{
             NoteDetails details = noteRepository.findByNote_Id(noteId);
             if(details == null){
-                throw new FundooException(FundooException.ExceptionType.INVALID_NOTE,"Invalid Note");
+                throw new FundooException(FundooException.ExceptionType.INVALID_NOTE,"INVALID NOTE");
             }
             LabelDetails labeldetails = labelRepository.findById(labelId);
             if(labeldetails == null){
-                throw new FundooException(FundooException.ExceptionType.INVALID_NOTE,"Invalid Label");
+                throw new FundooException(FundooException.ExceptionType.INVALID_LABEL,"INVALID LABEL");
             }
-//            details.LabelDetails(labeldetails);
+            details.LabelDetails(labeldetails);
             noteRepository.save(details);
             return "Added Label to Note";
-        }catch (Exception e){
-            throw new FundooException(FundooException.ExceptionType.INVALID_DATA,"INVALID DATA");
-        }
     }
 
     @Override
@@ -99,7 +99,7 @@ public class LabelService implements LabelServiceInterface {
             if(labeldetails == null){
                 throw new FundooException(FundooException.ExceptionType.INVALID_NOTE,"Invalid Label");
             }
-//            details.removeLabelDetails(labeldetails);
+            details.removeLabelDetails(labeldetails);
             noteRepository.save(details);
             return "Deleted Label to Note";
     }
@@ -107,7 +107,7 @@ public class LabelService implements LabelServiceInterface {
     @Override
     public String deleteNoteLabel(Long labelId) {
         if(labelId == null){
-            throw new FundooException(FundooException.ExceptionType.INVALID_NOTE,"Invalid Label ID");
+            throw new FundooException(FundooException.ExceptionType.INVALID_LABEL,"INVALID LABEL");
         }
         labelRepository.deleteById(labelId);
         return "Label Deleted Successfully";
