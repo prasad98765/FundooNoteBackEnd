@@ -91,7 +91,7 @@ public class LabelServiceTest {
 
     @Test
     public void givenLabelDetails_whenAddLabelToNotes_shouldReturnSuccessMessage(){
-            String message = labelService.addLabelToNotes(17L,3L);
+            String message = labelService.addLabelToNotes(17L,2L);
             Assert.assertEquals(message,"Added Label to Note");
     }
 

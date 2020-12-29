@@ -4,6 +4,7 @@ import com.bridgelabz.fundoonotesapi.fundoonotesapi.dto.NoteDTO;
 import com.bridgelabz.fundoonotesapi.fundoonotesapi.dto.Response;
 import com.bridgelabz.fundoonotesapi.fundoonotesapi.exception.FundooException;
 import com.bridgelabz.fundoonotesapi.fundoonotesapi.service.NoteService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +16,11 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/notes")
+@Slf4j
 public class NoteController {
+
+    private static final org.slf4j.Logger log =
+            org.slf4j.LoggerFactory.getLogger(NoteController.class);
     @Autowired
     private NoteService noteService;
 
