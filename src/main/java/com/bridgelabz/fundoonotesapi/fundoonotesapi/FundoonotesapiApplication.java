@@ -11,5 +11,6 @@ import java.sql.DriverManager;
 public class FundoonotesapiApplication {
     public static void main(String[] args) {
         SpringApplication.run(FundoonotesapiApplication.class, args);
+        System.out.println(System.getenv("MY_SQL_URL"));
     }
 }

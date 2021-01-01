@@ -1,27 +1,27 @@
-spring:
-  profiles: development
-  datasource:
-    url: ${mysqlUrl}
-    username: ${username}
-    password: ${password}
-    driver-class-name : com.mysql.cj.jdbc.Driver
-  jpa:
-    hibernate:
-      ddl-auto: update
-    show-sql : false
-      properties:
-        hibernate:
-          dialect: org.hibernate.dialect.MySQL5Dialect
-  mail:
-    username: ${mailId}
-    password: ${mailPass}
-    host: smtp.gmail.com
-    port: 587
-    properties:
-      mail:
-        smtp:
-          auth: true
-          starttls:
-            enable: true
-server:
-  port=5000:
+#spring:
+#  profiles: development
+#  datasource:
+#    url: ${MY_SQL_URL}
+#    username: ${MY_SQL_USERNAME}
+#    password: ${MY_SQL_PASSWORD}
+#    driver-class-name : com.mysql.cj.jdbc.Driver
+#  jpa:
+#    hibernate:
+#      ddl-auto: update
+#    show-sql : false
+#      properties:
+#        hibernate:
+#          dialect: org.hibernate.dialect.MySQL5Dialect
+#  mail:
+#    username: ${MAIL_ID}
+#    password: ${MAIL_PASS}
+#    host: smtp.gmail.com
+#    port: 587
+#    properties:
+#      mail:
+#        smtp:
+#          auth: true
+#          starttls:
+#            enable: true
+#server:
+#  port=5000:
